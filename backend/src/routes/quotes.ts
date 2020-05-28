@@ -4,7 +4,8 @@ import controller from '../controllers/quotes'
 const router = express.Router();
 
 router.get('/', (_req, res) => {
-  res.send('Fetching quotes!');
+  controller.getQuotes()
+    .then((quotes) => res.status(200).send(quotes));
 });
 
 router.post('/', (req, res) => {

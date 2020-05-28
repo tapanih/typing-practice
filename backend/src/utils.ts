@@ -12,7 +12,7 @@ const parseContent = (content: unknown): string => {
   if (!content || !isString(content)) {
     throw new Error("Incorrect or missing content");
   }
-  return name;
+  return content;
 };
 
 export const toQuote = (obj: unknown): QuoteType => {

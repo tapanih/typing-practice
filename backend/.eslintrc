@@ -21,9 +21,5 @@
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "project": "./tsconfig.json"
-  },  
-  "eslint.workingDirectories": [
-    { "directory": "frontend", "changeProcessCWD": true },
-    { "directory": "backend", "changeProcessCWD": true }
-  ]
+  }
 }

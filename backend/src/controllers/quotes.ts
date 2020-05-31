@@ -1,13 +1,25 @@
-import { Quote } from "../models";
+import { Quote, db } from "../models";
 import { toQuote, toQuotes } from "../utils";
 import { QuoteType } from "../types";
 
-const addQuote = async (content: string): Promise<number> => {
-  const quote = await Quote.create({
-    content
+const addQuote = async (quote: QuoteType): Promise<number> => {
+  const newQuote = await Quote.create({
+    content: quote.content
   });
 
-  return quote.id;
+  return newQuote.id;
+};
+
+const getRandomQuote = async (): Promise<QuoteType> => {
+  const quote = toQuote(await Quote.findOne({ 
+    order: db.random()
+  }));
+
+  if (!quote) {
+    throw new Error("Quote not found");
+  }
+
+  return quote;
 };
 
 const getQuotes = async (): Promise<QuoteType[]> => {
@@ -33,5 +45,5 @@ const getQuote = async (id: number): Promise<QuoteType> => {
 };
 
 export default {
-  addQuote, getQuote, getQuotes
+  addQuote, getRandomQuote, getQuote, getQuotes
 };

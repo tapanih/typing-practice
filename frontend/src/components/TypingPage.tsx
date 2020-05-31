@@ -66,7 +66,17 @@ const TypingPage: React.FC = () => {
     <div>
       <p>
         <span style={{ color: 'green'}}>{typedCorrect}</span>
-        <span style={{ color: 'red'}}>{typedWrong}</span>
+        <span style={{ color: 'red', display: "inline-block"}}>{typedWrong}</span>
+        <span style={{
+          position: "absolute",
+          display: "inline-block",
+          width: "1px",
+          height: "16px",
+          fontWeight: "lighter",
+          backgroundColor: "black",
+          marginTop: "2px",
+          marginRight: "1px"
+        }}>&nbsp;</span>
         <span>{notTyped}</span>
       </p>
       {finished ?

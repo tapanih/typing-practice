@@ -90,14 +90,14 @@ const TypingPage: React.FC = () => {
       <div className="container mx-auto h-full flex justify-center items-center">
         <div className="rounded bg-blue-100 w-2/3 shadow-lg px-6 py-6">
         <p className="pb-4">
-          <span className="text-green-600">{typedCorrectBefore}</span>
-          <span className="text-red-600 bg-red-300">{typedWrongBefore}</span>
+          <span className="text-correct">{typedCorrectBefore}</span>
+          <span className="text-wrong">{typedWrongBefore}</span>
           <span className="whitespace-no-wrap">
-          <span className="text-green-600">{currentWordCorrect}</span>
-          <span className="text-red-600 bg-red-300">{currentWordWrong}</span>
+          <span className="text-correct">{currentWordCorrect}</span>
+          <span className="text-wrong">{currentWordWrong}</span>
           <span className="fake-caret">&nbsp;</span>
           <span>{currentWordNotTyped}</span></span>
-          <span className="text-red-600 bg-red-300">{typedWrong}</span>
+          <span className="text-wrong">{typedWrong}</span>
           <span>{notTyped}</span>
         </p>
       {finished ?

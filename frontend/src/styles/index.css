@@ -1,5 +1,15 @@
 @tailwind base;
+
 @tailwind components;
+
+.text-correct {
+  @apply text-green-600;
+}
+
+.text-wrong {
+  @apply text-red-600 bg-red-300;
+}
+
 @tailwind utilities;
 
 .fake-caret {

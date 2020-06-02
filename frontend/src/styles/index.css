@@ -1,0 +1,13 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.fake-caret {
+  position: absolute;
+  width: 1px;
+  height: 21px;
+  font-weight: lighter;
+  background-color: black;
+  margin-top: 2px;
+  margin-right: 1px;
+}

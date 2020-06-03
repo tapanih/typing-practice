@@ -101,6 +101,10 @@ const TypingPage: React.FC = () => {
   const typedWrong = quote.content.substring(endIndex, typedWrongEndIndex);
   const notTyped = quote.content.substring(typedWrongEndIndex);
 
+  const inputClassString = wrong === 0 
+    ? "text-input bg-white"
+    : "text-input bg-red-300";
+
   return (
     <div className="bg-blue-300 h-screen font-mono">
       <div className="container mx-auto h-full flex justify-center items-center">
@@ -109,10 +113,11 @@ const TypingPage: React.FC = () => {
           <span className="text-correct">{typedCorrectBefore}</span>
           <span className="text-wrong">{typedWrongBefore}</span>
           <span className="whitespace-no-wrap">
-          <span className="text-correct">{currentWordCorrect}</span>
-          <span className="text-wrong">{currentWordWrong}</span>
-          <span className="fake-caret">&nbsp;</span>
-          <span>{currentWordNotTyped}</span></span>
+            <span className="text-correct">{currentWordCorrect}</span>
+            <span className="text-wrong">{currentWordWrong}</span>
+            <span className="fake-caret">&nbsp;</span>
+            <span>{currentWordNotTyped}</span>
+          </span>
           <span className="text-wrong">{typedWrong}</span>
           <span>{notTyped}</span>
         </p>
@@ -123,8 +128,7 @@ const TypingPage: React.FC = () => {
         </div>
       :
         <input
-          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700
-                     leading-tight focus:outline-none focus:shadow-outline"
+          className={inputClassString}
           value={text}
           onChange={() => { return; }}
           onKeyPress={event => handleKeyPress(event)}

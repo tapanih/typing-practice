@@ -5,6 +5,8 @@ import { apiBaseUrl } from '../constants';
 
 const TypingPage: React.FC = () => {
   const [quote, setQuote] = React.useState<QuoteType | null>(null);
+  const [text, setText] = React.useState<string>("");
+  const [checkpoint, setCheckpoint] = React.useState<number>(0);
   const [startTime, setStartTime] = React.useState<number>(0);
   const [endTime, setEndTime] = React.useState<number>(0);
   const [finished, setFinished] = React.useState<boolean>(false);
@@ -38,8 +40,15 @@ const TypingPage: React.FC = () => {
     }
 
     const char = String.fromCharCode(event.charCode);
+    setText(`${text}${char}`);
 
     if (char === quote.content[correct] && wrong === 0) {
+
+      if (char === " ") {
+        setText("")
+        setCheckpoint(correct + 1);
+      }
+
       // checking the end condition here so it triggers appropriately
       if (correct === quote.content.length - 1) {
         setEndTime(Date.now());
@@ -54,6 +63,13 @@ const TypingPage: React.FC = () => {
   // handling character removal
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key !== "Backspace") return;
+
+    // we have correctly typed a word and can't go back
+    if (correct + wrong === checkpoint) {
+      return;
+    }
+
+    setText(text.substring(0, text.length - 1));
 
     if (wrong === 0) {
       setCorrect((correct <= 0 ? 0 : correct - 1));
@@ -106,9 +122,11 @@ const TypingPage: React.FC = () => {
           <p>Speed: {Math.round((quote.content.length / 5) / ((endTime - startTime) / 60000))} WPM</p>
         </div>
       :
-        <input 
+        <input
           className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700
                      leading-tight focus:outline-none focus:shadow-outline"
+          value={text}
+          onChange={() => { return; }}
           onKeyPress={event => handleKeyPress(event)}
           onKeyDown={event => handleKeyDown(event)}
           maxLength={quote.content.length}

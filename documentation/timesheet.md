@@ -5,4 +5,7 @@
 | 25.5. | 5     | Building initial structure for frontend/backend and learning Sequelize. |
 | 28.5  | 3     | Getting PostgreSQL to work. Initial commit. |
 | 30.5  | 3     | Added a simple typing page. |
-| total | 11    | | 
+| 2.6   | 5     | Added TailwindCSS for styling and fixed visual bugs. |
+| 4.6   | 3     | Begin work on the authentication. Learning Passport. |
+| 5.6   | 3     | Implementing authentication in the backend. |
+| total | 22    | |

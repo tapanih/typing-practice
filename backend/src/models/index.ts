@@ -1,6 +1,6 @@
- import { Options, Sequelize } from 'sequelize';
-
+import { Options, Sequelize } from 'sequelize';
 import Quote from './quote';
+import User from './user';
 import config from '../config.json';
 
 const sequelize = new Sequelize(
@@ -11,10 +11,12 @@ const sequelize = new Sequelize(
 );
 
 Quote.initialize(sequelize);
+User.initialize(sequelize);
 
 void sequelize.sync({ force: true });
 
 export {
     sequelize as db,
-    Quote
+    Quote,
+    User
 };

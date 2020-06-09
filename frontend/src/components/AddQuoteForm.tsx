@@ -5,8 +5,7 @@ import axios from 'axios';
 import { apiBaseUrl } from '../constants';
 
 const AddQuoteForm: React.FC = () => {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { register, setValue, handleSubmit, errors } = useForm<QuoteType>();
+  const { register, handleSubmit } = useForm<QuoteType>();
 
   const addQuote = async (quote: QuoteType) => {
     try {

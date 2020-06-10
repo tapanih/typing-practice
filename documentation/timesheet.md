@@ -7,5 +7,6 @@
 | 30.5  | 3     | Added a simple typing page. |
 | 2.6   | 5     | Added TailwindCSS for styling and fixed visual bugs. |
 | 4.6   | 3     | Begin work on the authentication. Learning Passport. |
-| 5.6   | 3     | Implementing authentication in the backend. |
-| total | 22    | |
+| 5.6   | 3     | Implemented authentication to the backend. |
+| 9.6   | 5     | Implemented authentication to the frontend. |
+| total | 27    | |

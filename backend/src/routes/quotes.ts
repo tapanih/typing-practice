@@ -1,6 +1,7 @@
 import express from 'express';
 import controller from '../controllers/quotes';
 import { toQuote } from '../utils';
+import passport from 'passport';
 
 const router = express.Router();
 
@@ -16,7 +17,7 @@ router.get('/random', (_req, res) => {
     .catch(() => res.status(404).send());
 });
 
-router.post('/', (req, res) => {
+router.post('/', passport.authenticate('jwt', { session: false }), (req, res) => {
   try {
     const quote = toQuote(req.body);
     controller.addQuote(quote)

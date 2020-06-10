@@ -2,13 +2,9 @@ import express from 'express';
 import jsonwebtoken from 'jsonwebtoken';
 import controller from '../controllers/auth';
 import { toLoginDetails } from '../utils';
-import passport from 'passport';
+import { LoggedUser } from '../types';
 
 const router = express.Router();
-
-router.get('/protected', passport.authenticate('jwt', { session: false }), (_req, res) => {
-    res.status(200).send("Huge success!");
-});
 
 router.post('/register', (req, res) => {
   try {
@@ -31,7 +27,12 @@ router.post('/login', (req, res) => {
           iat: Date.now()
         };
         const token = jsonwebtoken.sign(payload, "SECRET", { expiresIn: "1d" });
-        res.status(200).send({ token: `Bearer ${token}`, expiresIn: "1d" });
+        const userInfo: LoggedUser = {
+          username: user.username,
+          token: token,
+          expiresIn: "1d"
+        };
+        res.status(200).send(userInfo);
 
       }).catch(() => res.status(401).send());
   } catch (error) {

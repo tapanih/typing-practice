@@ -108,7 +108,7 @@ const TypingPage: React.FC = () => {
   return (
     <div className="bg-blue-300 h-screen font-mono">
       <div className="container mx-auto h-full flex justify-center items-center">
-        <div className="rounded bg-blue-100 w-2/3 shadow-lg px-6 py-6">
+        <div className="rounded bg-blue-100 max-w-2xl shadow-lg px-6 py-6">
         <p className="pb-4">
           <span className="text-correct">{typedCorrectBefore}</span>
           <span className="text-wrong">{typedWrongBefore}</span>
@@ -130,6 +130,7 @@ const TypingPage: React.FC = () => {
         <input
           className={inputClassString}
           value={text}
+          // suppressing React warning (caused by updating input value completely by hand)
           onChange={() => { return; }}
           onKeyPress={event => handleKeyPress(event)}
           onKeyDown={event => handleKeyDown(event)}

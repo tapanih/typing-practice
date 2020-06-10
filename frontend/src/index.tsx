@@ -2,8 +2,11 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
 import './styles/tailwind.css';
+import { reducer, StateProvider } from './state';
 
 ReactDOM.render(
-    <App />,
+  <StateProvider reducer={reducer}>
+    <App />
+  </StateProvider>,
   document.getElementById('root')
 );

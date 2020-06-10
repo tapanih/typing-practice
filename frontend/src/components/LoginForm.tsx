@@ -7,7 +7,7 @@ import { useStateValue, setUser } from '../state';
 
 const LoginForm: React.FC = () => {
   const [, dispatch] = useStateValue();
-  const { register, handleSubmit, errors } = useForm<LoginDetails>();
+  const { register, handleSubmit, errors, setError } = useForm<LoginDetails>();
 
   const onSubmit = async (details: LoginDetails) => {
     try {
@@ -19,8 +19,8 @@ const LoginForm: React.FC = () => {
         'loggedUser', JSON.stringify(user)
       );
       dispatch(setUser(user));
-    } catch (e) {
-      console.log("Something went wrong!");
+    } catch (error) {
+      setError("username", "notMatch", error.response.data);
     }
   };
 
@@ -37,7 +37,8 @@ const LoginForm: React.FC = () => {
               />
             </div>
             <div>
-              {errors.username && <span className="text-red-600">This field is required</span>}
+              {errors.username?.type === "required" && <span className="text-red-600">This field is required</span>}
+              {errors.username?.type === "notMatch" && <span className="text-red-600">{errors.username.message}</span>}
             </div>
             <div className="mt-4">
               <input
@@ -48,7 +49,7 @@ const LoginForm: React.FC = () => {
               />
             </div>
             <div>
-              {errors.username && <span className="text-red-600">This field is required</span>}
+              {errors.password && <span className="text-red-600">This field is required</span>}
             </div>
             <div className="text-center mt-4">
               <button 

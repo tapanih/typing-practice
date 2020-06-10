@@ -34,7 +34,7 @@ router.post('/login', (req, res) => {
         };
         res.status(200).send(userInfo);
 
-      }).catch(() => res.status(401).send());
+      }).catch(() => res.status(401).send("wrong username or password"));
   } catch (error) {
     res.status(400).send();
   }

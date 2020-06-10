@@ -16,7 +16,7 @@ const App: React.FC = () => {
       const user = JSON.parse(loggedUserJSON);
       dispatch(setUser(user));
     }
-  }, [])
+  }, [dispatch]);
 
   return (
     <Router>

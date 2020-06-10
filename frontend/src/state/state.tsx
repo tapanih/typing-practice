@@ -17,10 +17,10 @@ const Context = React.createContext<[State, React.Dispatch<Action>]>([
 export type Action =
   | {
       type: "SET_USER";
-      payload: LoggedUser;
+      payload: LoggedUser | null;
     };
 
-export const setUser = (user: LoggedUser): Action => {
+export const setUser = (user: LoggedUser | null): Action => {
   return {
     type: "SET_USER",
     payload: user

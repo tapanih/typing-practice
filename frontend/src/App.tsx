@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Switch} from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch, Redirect} from 'react-router-dom';
 import TypingPage from './components/TypingPage';
 import AddQuoteForm from './components/AddQuoteForm';
 import Header from './components/Header';
@@ -8,7 +8,7 @@ import LoginForm from './components/LoginForm';
 import RegisterForm from './components/RegisterForm';
 
 const App: React.FC = () => {
-  const [, dispatch] = useStateValue();
+  const [state, dispatch] = useStateValue();
 
   React.useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem('loggedUser');
@@ -23,7 +23,7 @@ const App: React.FC = () => {
       <Header />
       <Switch>
         <Route exact path="/"   render={() => <TypingPage />} />
-        <Route path="/login"    render={() => <LoginForm />} />
+        <Route path="/login"    render={() => state.user ? <Redirect to="/" /> : <LoginForm />} />
         <Route path="/register" render={() => <RegisterForm />} />
         <Route path="/submit"   render={() => <AddQuoteForm />} />
       </Switch>

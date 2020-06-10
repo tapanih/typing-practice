@@ -3,10 +3,10 @@ import { QuoteType } from '../../../backend/src/types';
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
 import { apiBaseUrl } from '../constants';
-import { useStateValue } from '../state';
+import { useStateValue, setUser } from '../state';
 
 const AddQuoteForm: React.FC = () => {
-  const [state, ] = useStateValue();
+  const [state, dispatch ] = useStateValue();
   const { register, handleSubmit } = useForm<QuoteType>();
 
   const addQuote = async (quote: QuoteType) => {
@@ -20,7 +20,8 @@ const AddQuoteForm: React.FC = () => {
         { headers: { Authorization: `Bearer ${state.user.token}` }}
       );
     } catch (e) {
-      console.log("Something went wrong!")
+      dispatch(setUser(null));
+      window.localStorage.removeItem("loggedUser");
     }
   };
 

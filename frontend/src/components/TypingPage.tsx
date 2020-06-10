@@ -106,40 +106,38 @@ const TypingPage: React.FC = () => {
     : "text-input bg-red-300";
 
   return (
-    <div className="bg-blue-300 h-screen font-mono">
-      <div className="container mx-auto h-full flex justify-center items-center">
-        <div className="rounded bg-blue-100 max-w-2xl shadow-lg px-6 py-6">
-        <p className="pb-4">
-          <span className="text-correct">{typedCorrectBefore}</span>
-          <span className="text-wrong">{typedWrongBefore}</span>
-          <span className="whitespace-no-wrap">
-            <span className="text-correct">{currentWordCorrect}</span>
-            <span className="text-wrong">{currentWordWrong}</span>
-            <span className="fake-caret">&nbsp;</span>
-            <span>{currentWordNotTyped}</span>
-          </span>
-          <span className="text-wrong">{typedWrong}</span>
-          <span>{notTyped}</span>
-        </p>
-      {finished ?
-        <div>
-          <p>Finished!</p>
-          <p>Speed: {Math.round((quote.content.length / 5) / ((endTime - startTime) / 60000))} WPM</p>
-        </div>
-      :
-        <input
-          className={inputClassString}
-          value={text}
-          // suppressing React warning (caused by updating input value completely by hand)
-          onChange={() => { return; }}
-          onKeyPress={event => handleKeyPress(event)}
-          onKeyDown={event => handleKeyDown(event)}
-          maxLength={quote.content.length}
-        />
-      }
+    <div className="container mx-auto h-full flex justify-center items-center">
+      <div className="rounded bg-blue-100 max-w-2xl shadow-lg px-6 py-6">
+      <p className="pb-4">
+        <span className="text-correct">{typedCorrectBefore}</span>
+        <span className="text-wrong">{typedWrongBefore}</span>
+        <span className="whitespace-no-wrap">
+          <span className="text-correct">{currentWordCorrect}</span>
+          <span className="text-wrong">{currentWordWrong}</span>
+          <span className="fake-caret">&nbsp;</span>
+          <span>{currentWordNotTyped}</span>
+        </span>
+        <span className="text-wrong">{typedWrong}</span>
+        <span>{notTyped}</span>
+      </p>
+    {finished ?
+      <div>
+        <p>Finished!</p>
+        <p>Speed: {Math.round((quote.content.length / 5) / ((endTime - startTime) / 60000))} WPM</p>
       </div>
+    :
+      <input
+        className={inputClassString}
+        value={text}
+        // suppressing React warning (caused by updating input value completely by hand)
+        onChange={() => { return; }}
+        onKeyPress={event => handleKeyPress(event)}
+        onKeyDown={event => handleKeyDown(event)}
+        maxLength={quote.content.length}
+      />
+    }
     </div>
-    </div>
+  </div>
   );
 };
 

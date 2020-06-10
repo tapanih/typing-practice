@@ -19,15 +19,17 @@ const App: React.FC = () => {
   }, [dispatch]);
 
   return (
-    <Router>
-      <Header />
-      <Switch>
-        <Route exact path="/"   render={() => <TypingPage />} />
-        <Route path="/login"    render={() => state.user ? <Redirect to="/" /> : <LoginForm />} />
-        <Route path="/register" render={() => <RegisterForm />} />
-        <Route path="/submit"   render={() => <AddQuoteForm />} />
-      </Switch>
-    </Router>
+    <div className="bg-blue-300 h-screen font-mono">
+      <Router>
+        <Header />
+        <Switch>
+          <Route exact path="/"   render={() => <TypingPage />} />
+          <Route path="/login"    render={() => state.user ? <Redirect to="/" /> : <LoginForm />} />
+          <Route path="/register" render={() => <RegisterForm />} />
+          <Route path="/submit"   render={() => <AddQuoteForm />} />
+        </Switch>
+      </Router>
+    </div>
   )
 }
 

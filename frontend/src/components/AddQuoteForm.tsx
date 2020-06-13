@@ -20,6 +20,7 @@ const AddQuoteForm: React.FC = () => {
         { headers: { Authorization: `Bearer ${state.user.token}` }}
       );
     } catch (e) {
+      // TODO: refactor into a service function
       dispatch(setUser(null));
       window.localStorage.removeItem("loggedUser");
     }

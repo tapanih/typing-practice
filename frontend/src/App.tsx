@@ -25,7 +25,7 @@ const App: React.FC = () => {
         <Switch>
           <Route exact path="/"   render={() => <TypingPage />} />
           <Route path="/login"    render={() => state.user ? <Redirect to="/" /> : <LoginForm />} />
-          <Route path="/register" render={() => <RegisterForm />} />
+          <Route path="/register" render={() => state.user ? <Redirect to="/" /> : <RegisterForm />} />
           <Route path="/submit"   render={() => <AddQuoteForm />} />
         </Switch>
       </Router>

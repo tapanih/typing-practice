@@ -1,5 +1,6 @@
 import React from 'react';
 import { LoggedUser } from '../../../backend/src/types';
+import userService from '../services/userService';
 
 export interface State {
   user: LoggedUser | null;
@@ -19,6 +20,14 @@ export type Action =
       type: "SET_USER";
       payload: LoggedUser | null;
     };
+
+export const logout = (): Action => {
+  userService.logout();
+  return {
+    type: "SET_USER",
+    payload: null
+  };
+};
 
 export const setUser = (user: LoggedUser | null): Action => {
   return {

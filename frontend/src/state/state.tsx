@@ -29,7 +29,7 @@ export const logout = (): Action => {
   };
 };
 
-export const setUser = (user: LoggedUser | null): Action => {
+export const login = (user: LoggedUser | null): Action => {
   return {
     type: "SET_USER",
     payload: user

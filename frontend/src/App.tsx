@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Switch, Redirect} from 'react-router-do
 import TypingPage from './components/TypingPage';
 import AddQuoteForm from './components/AddQuoteForm';
 import Header from './components/Header';
-import { setUser, useStateValue } from './state';
+import { login, useStateValue } from './state';
 import LoginForm from './components/LoginForm';
 import RegisterForm from './components/RegisterForm';
 
@@ -14,7 +14,7 @@ const App: React.FC = () => {
     const loggedUserJSON = window.localStorage.getItem('loggedUser');
     if (loggedUserJSON) {
       const user = JSON.parse(loggedUserJSON);
-      dispatch(setUser(user));
+      dispatch(login(user));
     }
   }, [dispatch]);
 

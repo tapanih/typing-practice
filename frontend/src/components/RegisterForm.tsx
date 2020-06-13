@@ -1,7 +1,7 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { apiBaseUrl } from '../constants';
-import axios from 'axios';
+import userService from '../services/userService';
+import { useHistory } from 'react-router-dom';
 
 export interface RegisterFormFields {
   username: string;
@@ -11,13 +11,12 @@ export interface RegisterFormFields {
 
 const RegisterForm: React.FC = () => {
   const { register, handleSubmit, errors, getValues } = useForm<RegisterFormFields>();
+  const history = useHistory();
 
   const onSubmit = async (details: RegisterFormFields) => {
     try {
-      await axios.post<RegisterFormFields>(
-        `${apiBaseUrl}/auth/register`,
-        details
-      );
+      await userService.register(details);
+      history.push("/login");
     } catch (e) {
       console.log("Something went wrong!");
     }

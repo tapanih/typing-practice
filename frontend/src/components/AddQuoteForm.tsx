@@ -3,7 +3,7 @@ import { QuoteType } from '../../../backend/src/types';
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
 import { apiBaseUrl } from '../constants';
-import { useStateValue, setUser } from '../state';
+import { useStateValue, logout } from '../state';
 
 const AddQuoteForm: React.FC = () => {
   const [state, dispatch ] = useStateValue();
@@ -20,9 +20,7 @@ const AddQuoteForm: React.FC = () => {
         { headers: { Authorization: `Bearer ${state.user.token}` }}
       );
     } catch (e) {
-      // TODO: refactor into a service function
-      dispatch(setUser(null));
-      window.localStorage.removeItem("loggedUser");
+      dispatch(logout());
     }
   };
 

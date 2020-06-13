@@ -1,9 +1,8 @@
 import React from 'react';
-import { LoginDetails, LoggedUser } from '../../../backend/src/types';
+import { LoginDetails } from '../../../backend/src/types';
 import { useForm } from 'react-hook-form';
-import axios from 'axios';
-import { apiBaseUrl } from '../constants';
-import { useStateValue, setUser } from '../state';
+import { useStateValue, login } from '../state';
+import userService from '../services/userService';
 
 const LoginForm: React.FC = () => {
   const [, dispatch] = useStateValue();
@@ -11,14 +10,8 @@ const LoginForm: React.FC = () => {
 
   const onSubmit = async (details: LoginDetails) => {
     try {
-      const { data: user } = await axios.post<LoggedUser>(
-        `${apiBaseUrl}/auth/login`,
-        details
-      );
-      window.localStorage.setItem(
-        'loggedUser', JSON.stringify(user)
-      );
-      dispatch(setUser(user));
+      const user = await userService.login(details);
+      dispatch(login(user));
     } catch (error) {
       setError("username", "notMatch", error.response.data);
     }

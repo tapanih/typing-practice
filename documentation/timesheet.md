@@ -9,4 +9,5 @@
 | 4.6   | 3     | Begin work on the authentication. Learning Passport. |
 | 5.6   | 3     | Implemented authentication to the backend. |
 | 9.6   | 5     | Implemented authentication to the frontend. |
-| total | 27    | |
+| 13.6  | 1     | Refactoring frontend.
+| total | 28    | |

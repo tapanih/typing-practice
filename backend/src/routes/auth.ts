@@ -11,7 +11,7 @@ router.post('/register', (req, res) => {
     const { username, password } = toLoginDetails(req.body);
     controller.register(username, password)
       .then(_user => res.status(201).send())
-      .catch(() => res.status(401).send());
+      .catch(() => res.status(401).send("username taken"));
   } catch (error) {
     res.status(400).send();
   }

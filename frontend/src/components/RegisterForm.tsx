@@ -10,15 +10,15 @@ export interface RegisterFormFields {
 }
 
 const RegisterForm: React.FC = () => {
-  const { register, handleSubmit, errors, getValues } = useForm<RegisterFormFields>();
+  const { register, handleSubmit, errors, getValues, setError } = useForm<RegisterFormFields>();
   const history = useHistory();
 
   const onSubmit = async (details: RegisterFormFields) => {
     try {
       await userService.register(details);
       history.push("/login");
-    } catch (e) {
-      console.log("Something went wrong!");
+    } catch (error) {
+      setError("username", "serverError", error.response.data);
     }
   };
 
@@ -36,7 +36,8 @@ const RegisterForm: React.FC = () => {
               />
             </div>
             <div>
-              {errors.username && <span className="text-red-600">This field is required</span>}
+              {errors.username?.type === "required" && <span className="text-red-600">This field is required</span>}
+              {errors.username?.type === "serverError" && <span className="text-red-600">{errors.username.message}</span>}
             </div>
             <div className="mt-4">
               <input

@@ -12,6 +12,7 @@ router.post('/', passport.authenticate('jwt', { session: false }), (req, res) =>
       .then(() => res.status(201).send())
       .catch(() => res.status(404).send());
   } catch (e) {
+    console.log(e);
     res.status(400).send("Missing or invalid result.");
   }
 });

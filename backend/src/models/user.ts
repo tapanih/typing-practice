@@ -22,8 +22,8 @@ class User extends Model {
     }, {
       sequelize: sequelize,
       name: {
-          singular: 'User',
-          plural: 'Users'
+          singular: 'user',
+          plural: 'users'
       }
     });
   }

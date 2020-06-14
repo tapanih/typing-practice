@@ -62,6 +62,7 @@ export const toQuote = (obj: unknown): QuoteType => {
     throw new Error("Quote is not an object");
   }
   return {
+    id: obj.id !== undefined ? parseId(obj.id) : undefined,
     content: parseContent(obj.content)
   };
 };
@@ -80,6 +81,6 @@ export const toResult = (body: unknown, user: unknown): ResultType => {
   return {
     wpm: parseWPM(body.wpm),
     userId: parseId(user.id),
-    quoteId: parseId(body.id)
-  }
-}
+    quoteId: parseId(body.quoteId)
+  };
+};

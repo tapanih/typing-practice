@@ -15,8 +15,8 @@ Quote.initialize(sequelize);
 User.initialize(sequelize);
 Result.initialize(sequelize);
 
-User.hasMany(Result, { onDelete: 'cascade'});
-Quote.hasMany(Result);
+User.hasMany(Result, { foreignKey: 'userId', onDelete: 'cascade'});
+Quote.hasMany(Result, { foreignKey: 'quoteId'});
 
 void sequelize.sync({ force: true });
 

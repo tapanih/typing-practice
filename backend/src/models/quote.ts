@@ -14,8 +14,8 @@ class Quote extends Model {
         }, {
             sequelize: sequelize,
             name: {
-                singular: 'Quote',
-                plural: 'Quotes'
+                singular: 'quote',
+                plural: 'quotes'
             }
         });
     }

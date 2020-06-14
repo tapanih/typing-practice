@@ -14,8 +14,8 @@ class Result extends Model {
         }, {
             sequelize: sequelize,
             name: {
-                singular: 'Test',
-                plural: 'Tests'
+                singular: 'result',
+                plural: 'results'
             }
         });
     }

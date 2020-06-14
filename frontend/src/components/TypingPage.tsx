@@ -1,9 +1,11 @@
 import React from 'react';
-import { QuoteType } from '../../../backend/src/types';
+import { QuoteType, ResultType } from '../../../backend/src/types';
 import axios from 'axios';
 import { apiBaseUrl } from '../constants';
+import { useStateValue, logout } from '../state';
 
 const TypingPage: React.FC = () => {
+  const [state, dispatch] = useStateValue();
   const [quote, setQuote] = React.useState<QuoteType | null>(null);
   const [text, setText] = React.useState<string>("");
   const [checkpoint, setCheckpoint] = React.useState<number>(0);
@@ -26,6 +28,28 @@ const TypingPage: React.FC = () => {
     }
     fetchRandomQuote();
   }, []);
+
+  const onFinish = async (quote: QuoteType) => {
+    setEndTime(Date.now());
+    setFinished(true);
+
+    if (state.user === null) {
+      return;
+    }
+    const wpm = Math.round((quote.content.length / 5) / ((Date.now() - startTime) / 60000));
+    try {
+      await axios.post<ResultType>(
+        `${apiBaseUrl}/results`,
+        {
+          wpm: wpm,
+          quoteId: quote.id,
+        },
+        { headers: { Authorization: `Bearer ${state.user.token}` }}
+      );
+    } catch (error) {
+      dispatch(logout());
+    }
+  }
 
   const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
     // making typescript happy
@@ -51,8 +75,7 @@ const TypingPage: React.FC = () => {
 
       // checking the end condition here so it triggers appropriately
       if (correct === quote.content.length - 1) {
-        setEndTime(Date.now());
-        setFinished(true);
+        onFinish(quote);
       }
       setCorrect(correct + 1)
     } else {

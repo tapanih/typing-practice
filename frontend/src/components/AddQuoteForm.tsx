@@ -14,8 +14,10 @@ const AddQuoteForm: React.FC = () => {
     }
     try {
       await quoteService.addQuote(quote);
-    } catch (e) {
-      dispatch(logout());
+    } catch (error) {
+      if (error.response.status === 401) {
+        dispatch(logout());
+      }
     }
   };
 

@@ -43,7 +43,9 @@ const TypingPage: React.FC = () => {
         userId: state.user.id
       });
     } catch (error) {
-      dispatch(logout());
+      if (error.response.status === 401) {
+        dispatch(logout());
+      }
     }
   }
 

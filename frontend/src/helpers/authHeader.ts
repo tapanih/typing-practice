@@ -3,7 +3,7 @@ const authHeader = () => {
   if (loggedUserJSON) {
     const user = JSON.parse(loggedUserJSON);
     if (user?.token) {
-      return { 'Authorization': 'Bearer ' + user.token };
+      return { Authorization: `Bearer ${user.token}` };
     } else {
       return {};
     }

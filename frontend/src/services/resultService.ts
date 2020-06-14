@@ -7,7 +7,7 @@ const addResult = async (result: ResultType) => {
   await axios.post<ResultType>(
     `${apiBaseUrl}/results`,
     result,
-    { headers: authHeader()}
+    { headers: authHeader() }
   );
 }
 

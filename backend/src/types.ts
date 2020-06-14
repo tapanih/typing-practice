@@ -8,6 +8,12 @@ export interface QuoteType {
   content: string;
 }
 
+export interface ResultType {
+  wpm: number;
+  userId: number;
+  quoteId: number;
+}
+
 export interface LoggedUser {
   username: string;
   token: string;

@@ -1,4 +1,4 @@
-import { QuoteType, LoginDetails } from "./types";
+import { QuoteType, LoginDetails, ResultType } from "./types";
 
 const isObject = (x: unknown): x is Record<string, unknown> => {
   return typeof x === 'object' && x != null;
@@ -6,6 +6,10 @@ const isObject = (x: unknown): x is Record<string, unknown> => {
 
 const isString = (text: unknown): text is string => {
   return typeof text === 'string' || text instanceof String;
+};
+
+const isNumber = (value: unknown): value is number => {
+  return typeof value === 'number' && isFinite(value);
 };
 
 const parseContent = (content: unknown): string => {
@@ -27,6 +31,20 @@ const parsePassword = (password: unknown): string => {
     throw new Error("Incorrect or missing password");
   }
   return password;
+};
+
+const parseWPM = (wpm: unknown): number => {
+  if (!wpm || !isNumber(wpm) || wpm < 0 || wpm > 500) {
+    throw new Error("Incorrect or missing WPM");
+  }
+  return wpm;
+};
+
+const parseId = (id: unknown): number => {
+  if (!id || !isNumber(id)) {
+    throw new Error("Incorrect or missing id");
+  }
+  return id;
 };
 
 export const toLoginDetails = (obj: unknown): LoginDetails => {
@@ -54,3 +72,14 @@ export const toQuotes = (array: unknown): QuoteType[] => {
   }
   return Object.values(array).map((obj: unknown) => toQuote(obj));
 };
+
+export const toResult = (body: unknown, user: unknown): ResultType => {
+  if (!isObject(body) || !isObject(user)) {
+    throw new Error("Result is not an object");
+  }
+  return {
+    wpm: parseWPM(body.wpm),
+    userId: parseId(user.id),
+    quoteId: parseId(body.id)
+  }
+}

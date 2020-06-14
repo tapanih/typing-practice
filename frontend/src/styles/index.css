@@ -28,6 +28,10 @@
   }
 }
 
+.validation-error {
+  @apply text-red-600;
+}
+
 @tailwind utilities;
 
 .fake-caret {

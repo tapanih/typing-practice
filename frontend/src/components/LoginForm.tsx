@@ -30,8 +30,8 @@ const LoginForm: React.FC = () => {
               />
             </div>
             <div>
-              {errors.username?.type === "required" && <span className="text-red-600">This field is required</span>}
-              {errors.username?.type === "notMatch" && <span className="text-red-600">{errors.username.message}</span>}
+              {errors.username?.type === "required" && <span className="validation-error">This field is required</span>}
+              {errors.username?.type === "notMatch" && <span className="validation-error">{errors.username.message}</span>}
             </div>
             <div className="mt-4">
               <input
@@ -42,7 +42,7 @@ const LoginForm: React.FC = () => {
               />
             </div>
             <div>
-              {errors.password && <span className="text-red-600">This field is required</span>}
+              {errors.password && <span className="validation-error">This field is required</span>}
             </div>
             <div className="text-center mt-4">
               <button 

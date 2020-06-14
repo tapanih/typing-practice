@@ -36,8 +36,8 @@ const RegisterForm: React.FC = () => {
               />
             </div>
             <div>
-              {errors.username?.type === "required" && <span className="text-red-600">This field is required</span>}
-              {errors.username?.type === "serverError" && <span className="text-red-600">{errors.username.message}</span>}
+              {errors.username?.type === "required" && <span className="validation-error">This field is required</span>}
+              {errors.username?.type === "serverError" && <span className="validation-error">{errors.username.message}</span>}
             </div>
             <div className="mt-4">
               <input
@@ -48,7 +48,7 @@ const RegisterForm: React.FC = () => {
               />
             </div>
             <div>
-              {errors.password && <span className="text-red-600">This field is required</span>}
+              {errors.password && <span className="validation-error">This field is required</span>}
             </div>
             <div className="mt-4">
               <input
@@ -61,7 +61,7 @@ const RegisterForm: React.FC = () => {
               />
             </div>
             <div>
-              {errors.confirmPassword && <span className="text-red-600">Passwords do not match</span>}
+              {errors.confirmPassword && <span className="validation-error">Passwords do not match</span>}
             </div>
             <div className="text-center mt-4">
               <button 

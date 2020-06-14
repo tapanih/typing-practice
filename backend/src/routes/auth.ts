@@ -28,6 +28,7 @@ router.post('/login', (req, res) => {
         };
         const token = jsonwebtoken.sign(payload, "SECRET", { expiresIn: "1d" });
         const userInfo: LoggedUser = {
+          id: user.id,
           username: user.username,
           token: token,
           expiresIn: "1d"

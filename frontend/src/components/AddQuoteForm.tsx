@@ -1,9 +1,8 @@
 import React from 'react';
 import { QuoteType } from '../../../backend/src/types';
 import { useForm } from 'react-hook-form';
-import axios from 'axios';
-import { apiBaseUrl } from '../constants';
 import { useStateValue, logout } from '../state';
+import quoteService from '../services/quoteService';
 
 const AddQuoteForm: React.FC = () => {
   const [state, dispatch ] = useStateValue();
@@ -14,11 +13,7 @@ const AddQuoteForm: React.FC = () => {
       return;
     }
     try {
-      await axios.post<QuoteType>(
-        `${apiBaseUrl}/quotes`,
-        quote,
-        { headers: { Authorization: `Bearer ${state.user.token}` }}
-      );
+      await quoteService.addQuote(quote);
     } catch (e) {
       dispatch(logout());
     }

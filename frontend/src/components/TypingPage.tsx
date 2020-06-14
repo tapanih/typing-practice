@@ -1,8 +1,8 @@
 import React from 'react';
-import { QuoteType, ResultType } from '../../../backend/src/types';
-import axios from 'axios';
-import { apiBaseUrl } from '../constants';
+import { QuoteType } from '../../../backend/src/types';
 import { useStateValue, logout } from '../state';
+import quoteService from '../services/quoteService';
+import resultService from '../services/resultService';
 
 const TypingPage: React.FC = () => {
   const [state, dispatch] = useStateValue();
@@ -18,9 +18,7 @@ const TypingPage: React.FC = () => {
   React.useEffect(() => {
     const fetchRandomQuote = async () => {
       try {
-        const { data: randomQuote } = await axios.get<QuoteType>(
-          `${apiBaseUrl}/quotes/random`
-        );
+        const randomQuote = await quoteService.getRandom();
         setQuote(randomQuote);
       } catch (e) {
         console.error("Error while fetching quote");
@@ -33,19 +31,17 @@ const TypingPage: React.FC = () => {
     setEndTime(Date.now());
     setFinished(true);
 
-    if (state.user === null) {
+    if (state.user === null || !quote.id) {
       return;
     }
+
     const wpm = Math.round((quote.content.length / 5) / ((Date.now() - startTime) / 60000));
     try {
-      await axios.post<ResultType>(
-        `${apiBaseUrl}/results`,
-        {
-          wpm: wpm,
-          quoteId: quote.id,
-        },
-        { headers: { Authorization: `Bearer ${state.user.token}` }}
-      );
+      await resultService.addResult({
+        wpm,
+        quoteId: quote.id,
+        userId: state.user.id
+      });
     } catch (error) {
       dispatch(logout());
     }

@@ -1,8 +1,9 @@
 import React from 'react';
 import { QuoteType } from '../../../backend/src/types';
 import { useForm } from 'react-hook-form';
-import { useStateValue, logout } from '../state';
+import { useStateValue } from '../state';
 import quoteService from '../services/quoteService';
+import handleErrors from '../helpers/handleErrors';
 
 const AddQuoteForm: React.FC = () => {
   const [state, dispatch ] = useStateValue();
@@ -15,9 +16,7 @@ const AddQuoteForm: React.FC = () => {
     try {
       await quoteService.addQuote(quote);
     } catch (error) {
-      if (error.response.status === 401) {
-        dispatch(logout());
-      }
+      handleErrors(error, dispatch);
     }
   };
 

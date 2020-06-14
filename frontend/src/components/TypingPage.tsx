@@ -1,8 +1,9 @@
 import React from 'react';
 import { QuoteType } from '../../../backend/src/types';
-import { useStateValue, logout } from '../state';
+import { useStateValue } from '../state';
 import quoteService from '../services/quoteService';
 import resultService from '../services/resultService';
+import handleErrors from '../helpers/handleErrors';
 
 const TypingPage: React.FC = () => {
   const [state, dispatch] = useStateValue();
@@ -43,9 +44,7 @@ const TypingPage: React.FC = () => {
         userId: state.user.id
       });
     } catch (error) {
-      if (error.response.status === 401) {
-        dispatch(logout());
-      }
+      handleErrors(error, dispatch);
     }
   }
 

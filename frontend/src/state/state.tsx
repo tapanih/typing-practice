@@ -1,6 +1,6 @@
 import React from 'react';
 import { LoggedUser } from '../../../backend/src/types';
-import userService from '../services/userService';
+import { Action } from './reducer';
 
 export interface State {
   user: LoggedUser | null;
@@ -14,36 +14,6 @@ const Context = React.createContext<[State, React.Dispatch<Action>]>([
   initialState,
   () => initialState
 ]);
-
-export type Action =
-  | {
-      type: "SET_USER";
-      payload: LoggedUser | null;
-    };
-
-export const logout = (): Action => {
-  userService.logout();
-  return {
-    type: "SET_USER",
-    payload: null
-  };
-};
-
-export const login = (user: LoggedUser | null): Action => {
-  return {
-    type: "SET_USER",
-    payload: user
-  };
-};
-
-export const reducer = (state: State, action: Action): State => {
-  switch (action.type) {
-    case "SET_USER":
-      return { ...state, user: action.payload };
-    default:
-      return state;
-  }
-};
 
 type StateProviderProps = {
   reducer: React.Reducer<State, Action>;

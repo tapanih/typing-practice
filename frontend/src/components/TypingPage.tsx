@@ -146,8 +146,12 @@ const TypingPage: React.FC = () => {
       <div>
         <p>Finished!</p>
         <p>Speed: {Math.round((quote.content.length / 5) / ((endTime - startTime) / 60000))} WPM</p>
-        <p><br/>Previous results:</p>
-        {results && results.map(result => <p key={result.id}>{result.wpm}</p>)}
+        {results.length > 0 && 
+          <>
+            <p><br/>Previous results:</p>
+            {results.map(result => <p key={result.id}>{result.wpm}</p>)}
+          </>
+        }
       </div>
     :
       <input

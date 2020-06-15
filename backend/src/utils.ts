@@ -84,3 +84,10 @@ export const toResult = (body: unknown, user: unknown): ResultType => {
     quoteId: parseId(body.quoteId)
   };
 };
+
+export const toUserId = (user: unknown): number => {
+  if (!isObject(user)) {
+    throw new Error("User is not an object");
+  }
+  return parseId(user.id);
+};

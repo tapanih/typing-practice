@@ -11,5 +11,5 @@
 | 9.6   | 5     | Implemented authentication to the frontend. |
 | 13.6  | 1     | Refactoring frontend. |
 | 14.6  | 4     | Implemented functionality for saving results. Refactoring. |
-| 15.6  | 2     | Worked on showing previous results in the frontend. Researched React chart libraries. |
-| total | 34    | |
+| 15.6  | 4     | Researched React chart libraries. Created a profile page which shows previous results. |
+| total | 36    | |

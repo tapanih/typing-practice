@@ -6,6 +6,7 @@ import Header from './components/Header';
 import { login, useStateValue } from './state';
 import LoginForm from './components/LoginForm';
 import RegisterForm from './components/RegisterForm';
+import ProfilePage from './components/ProfilePage';
 
 const App: React.FC = () => {
   const [state, dispatch] = useStateValue();
@@ -27,6 +28,7 @@ const App: React.FC = () => {
           <Route path="/login"    render={() => state.user ? <Redirect to="/" /> : <LoginForm />} />
           <Route path="/register" render={() => state.user ? <Redirect to="/" /> : <RegisterForm />} />
           <Route path="/submit"   render={() => <AddQuoteForm />} />
+          <Route path="/profile"  render={() => <ProfilePage />} />
         </Switch>
       </Router>
     </div>

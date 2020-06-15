@@ -7,11 +7,16 @@ const Header: React.FC = () => {
 
   return (
     <nav className="flex items-center justify-end bg-blue-600 p-3">
-      {state.user ? 
-        <button className="login-button" onClick={() => dispatch(logout())}>Logout</button>
+      {state.user ?
+        <>
+          <Link className="login-button mr-2" to="/profile">
+            {state.user.username}
+          </Link>
+          <button className="login-button" onClick={() => dispatch(logout())}>Logout</button>
+        </>
         :
         <>
-          <Link className="login-button" to="/login">
+          <Link className="login-button mr-2" to="/login">
             Login
           </Link>
           <Link className="login-button" to="/register">

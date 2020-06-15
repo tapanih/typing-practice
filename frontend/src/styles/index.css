@@ -15,7 +15,7 @@
 }
 
 .login-button {
-  @apply inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white mt-4;
+  @apply inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white;
 }
 
 .login-button:hover {

@@ -1,5 +1,5 @@
 import React from 'react';
-import { LineChart, XAxis, YAxis, CartesianGrid, Line, Label, ResponsiveContainer } from 'recharts';
+import { LineChart, XAxis, YAxis, CartesianGrid, Line, ResponsiveContainer, Legend } from 'recharts';
 import { ResultType } from '../../../backend/src/types';
 
 type ResultChartProps = {
@@ -8,16 +8,13 @@ type ResultChartProps = {
 
 const ResultChart = ({ results }: ResultChartProps) => {
   return (
-    <ResponsiveContainer width="80%" height={300}>
+    <ResponsiveContainer height={300} width="90%" minWidth={380}>
       <LineChart data={results}>
-        <XAxis>
-          <Label value="# of texts" offset={-5} position="insideBottom" />
-        </XAxis>
-        <YAxis>
-          <Label value="WPM" position="insideLeft" offset={0}/>
-        </YAxis>
+        <XAxis />
+        <YAxis />
         <CartesianGrid stroke="#eee" strokeDasharray="5 5"/>
-        <Line type="monotone" dataKey="wpm" stroke="#8884d8" />
+        <Line name="WPM" type="monotone" dataKey="wpm" stroke="#8884d8" />
+        <Legend verticalAlign="bottom" height={36}/>
       </LineChart>
     </ResponsiveContainer>
   )

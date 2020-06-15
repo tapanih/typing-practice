@@ -1,10 +1,9 @@
 import React from 'react';
-import { QuoteType, ResultType } from '../../../backend/src/types';
+import { QuoteType } from '../../../backend/src/types';
 import { useStateValue } from '../state';
 import quoteService from '../services/quoteService';
 import resultService from '../services/resultService';
 import handleErrors from '../helpers/handleErrors';
-import ResultChart from './ResultChart';
 
 const TypingPage: React.FC = () => {
   const [state, dispatch] = useStateValue();
@@ -16,7 +15,6 @@ const TypingPage: React.FC = () => {
   const [finished, setFinished] = React.useState<boolean>(false);
   const [correct, setCorrect] = React.useState<number>(0);
   const [wrong, setWrong] = React.useState<number>(0);
-  const [results, setResults] = React.useState<ResultType[]>([]);
 
   React.useEffect(() => {
     const fetchRandomQuote = async () => {
@@ -45,7 +43,6 @@ const TypingPage: React.FC = () => {
         quoteId: quote.id,
         userId: state.user.id
       });
-      setResults(await resultService.getResults());
     } catch (error) {
       handleErrors(error, dispatch);
     }
@@ -147,7 +144,6 @@ const TypingPage: React.FC = () => {
       <div>
         <p>Finished!</p>
         <p>Speed: {Math.round((quote.content.length / 5) / ((endTime - startTime) / 60000))} WPM</p>
-        {results.length > 0 && <ResultChart results={results} />}
       </div>
     :
       <input

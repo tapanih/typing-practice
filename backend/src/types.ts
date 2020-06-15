@@ -9,6 +9,7 @@ export interface QuoteType {
 }
 
 export interface ResultType {
+  id?: number;
   wpm: number;
   userId: number;
   quoteId: number;

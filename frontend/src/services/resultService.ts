@@ -11,6 +11,14 @@ const addResult = async (result: ResultType) => {
   );
 }
 
+const getResults = async (): Promise<ResultType[]> => {
+  const { data: results } = await axios.get<ResultType[]>(
+    `${apiBaseUrl}/results`,
+    { headers: authHeader() }
+  );
+  return results;
+}
+
 export default {
-  addResult
+  addResult, getResults
 }

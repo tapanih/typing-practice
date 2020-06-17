@@ -17,15 +17,16 @@ const TypingPage: React.FC = () => {
   const [wrong, setWrong] = React.useState<number>(0);
   const [typos, setTypos] = React.useState<number>(0);
 
-  React.useEffect(() => {
-    const fetchRandomQuote = async () => {
-      try {
-        const randomQuote = await quoteService.getRandom();
-        setQuote(randomQuote);
-      } catch (e) {
-        console.error("Error while fetching quote");
-      }
+  const fetchRandomQuote = async () => {
+    try {
+      const randomQuote = await quoteService.getRandom();
+      setQuote(randomQuote);
+    } catch (e) {
+      console.error("Error while fetching quote");
     }
+  };
+
+  React.useEffect(() => {
     fetchRandomQuote();
   }, []);
 
@@ -102,6 +103,18 @@ const TypingPage: React.FC = () => {
     }
   }
 
+  const reset = () => {
+    fetchRandomQuote();
+    setText("");
+    setCheckpoint(0);
+    setStartTime(0);
+    setEndTime(0);
+    setFinished(false);
+    setCorrect(0);
+    setWrong(0);
+    setTypos(0);
+  };
+
   if (!quote) {
     return <p>Loading...</p>;
   }
@@ -131,36 +144,38 @@ const TypingPage: React.FC = () => {
 
   return (
     <div className="container mx-auto h-full flex justify-center items-center">
-      <div className="rounded bg-blue-100 max-w-2xl shadow-lg px-6 py-6">
-      <p className="pb-4">
-        <span className="text-correct">{typedCorrectBefore}</span>
-        <span className="text-wrong">{typedWrongBefore}</span>
-        <span className="whitespace-no-wrap">
-          <span className="text-correct">{currentWordCorrect}</span>
-          <span className="text-wrong">{currentWordWrong}</span>
-          <span className="fake-caret">&nbsp;</span>
-          <span>{currentWordNotTyped}</span>
-        </span>
-        <span className="text-wrong">{typedWrong}</span>
-        <span>{notTyped}</span>
-      </p>
-    {finished ?
-      <div>
-        <p>Finished!</p>
-        <p>Speed: {Math.round((quote.content.length / 5) / ((endTime - startTime) / 60000))} WPM</p>
-        <p>Accuracy: {Math.round((quote.content.length - typos) / quote.content.length * 100)} %</p>
-      </div>
-    :
-      <input
-        className={inputClassString}
-        value={text}
-        // suppressing React warning (caused by updating input value completely by hand)
-        onChange={() => { return; }}
-        onKeyPress={event => handleKeyPress(event)}
-        onKeyDown={event => handleKeyDown(event)}
-        maxLength={quote.content.length}
-      />
-    }
+      <div className="container rounded bg-blue-100 max-w-3xl shadow-lg px-6 py-6">
+        {finished ?
+          <div className="text-center">
+            <div><button className="login-button bg-blue-600" onClick={() => reset()}>Go again</button></div>
+            <b>Finished!</b>
+            <p>Speed: {Math.round((quote.content.length / 5) / ((endTime - startTime) / 60000))} WPM</p>
+            <p>Accuracy: {Math.round((quote.content.length - typos) / quote.content.length * 100)} %</p>
+          </div>
+        : 
+        <>
+          <p className="pb-4">
+            <span className="text-correct">{typedCorrectBefore}</span>
+            <span className="text-wrong">{typedWrongBefore}</span>
+            <span className="whitespace-no-wrap">
+              <span className="text-correct">{currentWordCorrect}</span>
+              <span className="text-wrong">{currentWordWrong}</span>
+              <span className="fake-caret">&nbsp;</span>
+              <span>{currentWordNotTyped}</span>
+            </span>
+            <span className="text-wrong">{typedWrong}</span>
+            <span>{notTyped}</span>
+          </p>
+          <input
+            className={inputClassString}
+            value={text}
+            // suppressing React warning (caused by updating input value completely by hand)
+            onChange={() => { return; }}
+            onKeyPress={event => handleKeyPress(event)}
+            onKeyDown={event => handleKeyDown(event)}
+            maxLength={quote.content.length}
+          />
+        </>}
     </div>
   </div>
   );

@@ -10,7 +10,7 @@ class Quote extends Model {
 
     public static initialize(sequelize: Sequelize): void {
         this.init({
-            content: DataTypes.STRING
+            content: DataTypes.STRING(512)
         }, {
             sequelize: sequelize,
             name: {

@@ -13,7 +13,7 @@ const isNumber = (value: unknown): value is number => {
 };
 
 const parseContent = (content: unknown): string => {
-  if (!content || !isString(content)) {
+  if (!content || !isString(content) || content.length > 512) {
     throw new Error("Incorrect or missing content");
   }
   return content;

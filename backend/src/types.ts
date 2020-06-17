@@ -10,6 +10,7 @@ export interface QuoteType {
 
 export interface ResultType {
   id?: number;
+  createdAt?: string;
   wpm: number;
   accuracy: number;
   userId: number;

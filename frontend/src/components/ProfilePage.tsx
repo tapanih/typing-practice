@@ -1,4 +1,5 @@
 import React from 'react';
+import Moment from 'react-moment';
 import ResultChart from './ResultChart';
 import { ResultType } from '../../../backend/src/types';
 import resultService from '../services/resultService';
@@ -37,7 +38,7 @@ const ProfilePage: React.FC = () => {
                   <td className="px-4 pb-1">{index + 1}</td>
                   <td className="px-4 pb-1">{result.wpm} wpm</td>
                   <td className="px-4 pb-1">{result.accuracy} %</td>
-                  <td className="px-4 pb-1">Some time ago</td>
+                  <td className="px-4 pb-1"><Moment fromNow>{result.createdAt}</Moment></td>
                 </tr>)}
             </tbody>
           </table>

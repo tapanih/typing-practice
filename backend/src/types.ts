@@ -11,6 +11,7 @@ export interface QuoteType {
 export interface ResultType {
   id?: number;
   wpm: number;
+  accuracy: number;
   userId: number;
   quoteId: number;
 }

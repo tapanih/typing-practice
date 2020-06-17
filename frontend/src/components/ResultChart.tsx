@@ -9,7 +9,7 @@ type ResultChartProps = {
 const ResultChart = ({ results }: ResultChartProps) => {
   return (
     <ResponsiveContainer height={300} width="90%" minWidth={380}>
-      <LineChart data={results}>
+      <LineChart data={results.reverse()}>
         <XAxis />
         <YAxis />
         <CartesianGrid stroke="#eee" strokeDasharray="5 5"/>

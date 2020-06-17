@@ -38,9 +38,11 @@ const TypingPage: React.FC = () => {
     }
 
     const wpm = Math.round((quote.content.length / 5) / ((Date.now() - startTime) / 60000));
+    const accuracy = Math.round((quote.content.length - typos) / quote.content.length * 100);
     try {
       await resultService.addResult({
         wpm,
+        accuracy,
         quoteId: quote.id,
         userId: state.user.id
       });

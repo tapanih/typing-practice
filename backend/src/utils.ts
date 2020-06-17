@@ -34,10 +34,17 @@ const parsePassword = (password: unknown): string => {
 };
 
 const parseWPM = (wpm: unknown): number => {
-  if (!wpm || !isNumber(wpm) || wpm < 0 || wpm > 500) {
+  if (!wpm || !isNumber(wpm) || wpm < 0 || wpm > 500 || wpm % 1 !== 0) {
     throw new Error("Incorrect or missing WPM");
   }
   return wpm;
+};
+
+const parseAccuracy = (accuracy: unknown): number => {
+  if (!accuracy || !isNumber(accuracy) || accuracy < 0 || accuracy > 100 || accuracy % 1 !== 0) {
+    throw new Error("Incorrect or missing accuracy");
+  }
+  return accuracy;
 };
 
 const parseId = (id: unknown): number => {
@@ -80,6 +87,7 @@ export const toResult = (body: unknown, user: unknown): ResultType => {
   }
   return {
     wpm: parseWPM(body.wpm),
+    accuracy: parseAccuracy(body.accuracy),
     userId: parseId(user.id),
     quoteId: parseId(body.quoteId)
   };

@@ -10,7 +10,9 @@ const getResultsByUserId = async (userId: number): Promise<Result[]> => {
   const results = await Result.findAll({
     where: {
       userId: userId
-    }
+    },
+    attributes: ['wpm', 'accuracy', 'createdAt'],
+    order: [['createdAt', 'DESC']]
   });
   return results;
 };

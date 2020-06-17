@@ -7,10 +7,12 @@ class Result extends Model {
     public updatedAt!: Date;
 
     public wpm!: number;
+    public accuracy!: number;
 
     public static initialize(sequelize: Sequelize): void {
         this.init({
             wpm: DataTypes.INTEGER,
+            accuracy: DataTypes.INTEGER,
         }, {
             sequelize: sequelize,
             name: {

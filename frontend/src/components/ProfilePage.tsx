@@ -36,7 +36,7 @@ const ProfilePage: React.FC = () => {
                 <tr key={index} className={index % 2 === 0 ? "bg-blue-100" : "bg-blue-200"}>
                   <td className="px-4 pb-1">{index + 1}</td>
                   <td className="px-4 pb-1">{result.wpm} wpm</td>
-                  <td className="px-4 pb-1">N/A</td>
+                  <td className="px-4 pb-1">{result.accuracy} %</td>
                   <td className="px-4 pb-1">Some time ago</td>
                 </tr>)}
             </tbody>

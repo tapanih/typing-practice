@@ -15,6 +15,7 @@ const TypingPage: React.FC = () => {
   const [finished, setFinished] = React.useState<boolean>(false);
   const [correct, setCorrect] = React.useState<number>(0);
   const [wrong, setWrong] = React.useState<number>(0);
+  const [typos, setTypos] = React.useState<number>(0);
 
   React.useEffect(() => {
     const fetchRandomQuote = async () => {
@@ -66,7 +67,7 @@ const TypingPage: React.FC = () => {
     if (char === quote.content[correct] && wrong === 0) {
 
       if (char === " ") {
-        setText("")
+        setText("");
         setCheckpoint(correct + 1);
       }
 
@@ -74,9 +75,10 @@ const TypingPage: React.FC = () => {
       if (correct === quote.content.length - 1) {
         onFinish(quote);
       }
-      setCorrect(correct + 1)
+      setCorrect(correct + 1);
     } else {
-      setWrong(wrong + 1)
+      setWrong(wrong + 1);
+      setTypos(typos + 1);
     }
   }
 
@@ -144,6 +146,7 @@ const TypingPage: React.FC = () => {
       <div>
         <p>Finished!</p>
         <p>Speed: {Math.round((quote.content.length / 5) / ((endTime - startTime) / 60000))} WPM</p>
+        <p>Accuracy: {Math.round((quote.content.length - typos) / quote.content.length * 100)} %</p>
       </div>
     :
       <input

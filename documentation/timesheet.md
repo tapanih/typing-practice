@@ -12,4 +12,5 @@
 | 13.6  | 1     | Refactoring frontend. |
 | 14.6  | 4     | Implemented functionality for saving results. Refactoring. |
 | 15.6  | 4     | Researched React chart libraries. Created a profile page which shows previous results. |
-| total | 36    | |
+| 17.6  | 2     | Small improvements. |
+| total | 38    | |

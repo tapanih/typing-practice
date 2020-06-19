@@ -1,6 +1,7 @@
 export interface LoginDetails {
   username: string;
   password: string;
+  email: string;
 }
 
 export interface QuoteType {

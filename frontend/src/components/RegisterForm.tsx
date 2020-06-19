@@ -4,6 +4,7 @@ import userService from '../services/userService';
 import { useHistory } from 'react-router-dom';
 
 export interface RegisterFormFields {
+  email: string;
   username: string;
   password: string;
   confirmPassword: string;
@@ -28,6 +29,22 @@ const RegisterForm: React.FC = () => {
         <div className="rounded bg-blue-100 max-w-md shadow-lg mx-2 px-6 py-6">
           <h2 className="text-center">Create an account</h2>
           <form onSubmit={handleSubmit(onSubmit)}>
+            <div className="mt-4">
+              <input
+                name="email"
+                placeholder="Email"
+                ref={register({
+                  required: "This field is required",
+                  pattern: {
+                    value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
+                    message: "invalid email address"
+                  }
+                })}
+              />
+            </div>
+            <div>
+              {errors.email && <span className="validation-error">{errors.email.message}</span>}
+            </div>
             <div className="mt-4">
               <input 
                 name="username"

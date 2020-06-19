@@ -1,4 +1,4 @@
-import { QuoteType, LoginDetails, ResultType } from "./types";
+import { QuoteType, LoginDetails, ResultType } from "../types";
 
 const isObject = (x: unknown): x is Record<string, unknown> => {
   return typeof x === 'object' && x != null;
@@ -33,6 +33,13 @@ const parsePassword = (password: unknown): string => {
   return password;
 };
 
+const parseEmail = (email: unknown): string => {
+  if (!email || !isString(email)) {
+    throw new Error("Incorrect or missing email");
+  }
+  return email;
+};
+
 const parseWPM = (wpm: unknown): number => {
   if (!wpm || !isNumber(wpm) || wpm < 0 || wpm > 500 || wpm % 1 !== 0) {
     throw new Error("Incorrect or missing WPM");
@@ -60,7 +67,8 @@ export const toLoginDetails = (obj: unknown): LoginDetails => {
   }
   return {
     username: parseUsername(obj.username),
-    password: parsePassword(obj.password)
+    password: parsePassword(obj.password),
+    email: parseEmail(obj.email)
   };
 };
 

@@ -3,13 +3,14 @@ import jsonwebtoken from 'jsonwebtoken';
 import controller from '../controllers/auth';
 import { toLoginDetails } from '../utils';
 import { LoggedUser } from '../types';
+import { redis } from '../config/redis';
 
 const router = express.Router();
 
 router.post('/register', (req, res) => {
   try {
-    const { username, password } = toLoginDetails(req.body);
-    controller.register(username, password)
+    const { username, password, email } = toLoginDetails(req.body);
+    controller.register(username, password, email)
       .then(_user => res.status(201).send())
       .catch(() => res.status(401).send("username taken"));
   } catch (error) {
@@ -38,6 +39,18 @@ router.post('/login', (req, res) => {
       }).catch(() => res.status(401).send("wrong username or password"));
   } catch (error) {
     res.status(400).send();
+  }
+});
+
+router.get("/confirm/:id", async (req, res) => {
+  const { id } = req.params;
+  const userId = await redis.get(id);
+  if (userId) {
+    //TODO: set user as confirmed
+    await redis.del(id);
+    res.send("email confirmed");
+  } else {
+    res.send("invalid or expired link");
   }
 });
 

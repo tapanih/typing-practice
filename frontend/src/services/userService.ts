@@ -10,6 +10,13 @@ const register = async (details: RegisterFormFields) => {
   );
 }
 
+const confirmEmail = async (id: string): Promise<string> => {
+  const { data: status } = await axios.get<string>(
+    `${apiBaseUrl}/auth/confirm/${id}`
+  );
+  return status;
+}
+
 const login = async (details: LoginDetails) => {
   const { data: user } = await axios.post<LoggedUser>(
     `${apiBaseUrl}/auth/login`,
@@ -26,5 +33,5 @@ const logout = () => {
 }
 
 export default {
-  register, login, logout
+  register, confirmEmail, login, logout
 }

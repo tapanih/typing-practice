@@ -7,20 +7,28 @@ import quoteRouter from './routes/quotes';
 import resultRouter from './routes/results';
 import configure from './config/passport';
 import passport from 'passport';
+import { redis } from './config/redis';
 
-const app = express();
+const start = async () => {
+  // TODO: development mode only
+  await redis.flushall();
 
-configure(passport);
-app.use(passport.initialize());
-app.use(express.json());
-app.use(cors());
+  const app = express();
 
-app.use('/api/auth', authRouter);
-app.use('/api/quotes', quoteRouter);
-app.use('/api/results', resultRouter);
+  configure(passport);
+  app.use(passport.initialize());
+  app.use(express.json());
+  app.use(cors());
 
-const PORT = 3001;
+  app.use('/api/auth', authRouter);
+  app.use('/api/quotes', quoteRouter);
+  app.use('/api/results', resultRouter);
 
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
+  const PORT = 3001;
+
+  app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+  });
+};
+
+start().catch(error => console.log(error));

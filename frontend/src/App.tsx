@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Switch, Redirect} from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
 import TypingPage from './components/TypingPage';
 import AddQuoteForm from './components/AddQuoteForm';
 import Header from './components/Header';
@@ -7,6 +7,7 @@ import { login, useStateValue } from './state';
 import LoginForm from './components/LoginForm';
 import RegisterForm from './components/RegisterForm';
 import ProfilePage from './components/ProfilePage';
+import ConfirmEmail from './components/ConfirmEmail';
 
 const App: React.FC = () => {
   const [state, dispatch] = useStateValue();
@@ -29,6 +30,7 @@ const App: React.FC = () => {
           <Route path="/register" render={() => state.user ? <Redirect to="/" /> : <RegisterForm />} />
           <Route path="/submit"   render={() => <AddQuoteForm />} />
           <Route path="/profile"  render={() => <ProfilePage />} />
+          <Route path="/confirm/:id" component={ConfirmEmail} />
         </Switch>
       </Router>
     </div>

@@ -48,9 +48,9 @@ router.get("/confirm/:id", async (req, res) => {
   if (userId) {
     //TODO: set user as confirmed
     await redis.del(id);
-    res.send("email confirmed");
+    res.send("accepted");
   } else {
-    res.send("invalid or expired link");
+    res.send("rejected");
   }
 });
 

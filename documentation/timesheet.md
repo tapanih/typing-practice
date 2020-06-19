@@ -13,5 +13,5 @@
 | 14.6  | 4     | Implemented functionality for saving results. Refactoring. |
 | 15.6  | 4     | Researched React chart libraries. Created a profile page which shows previous results. |
 | 17.6  | 2     | Small improvements. |
-| 19.6  | 4     | Learning Nodemailer and Redis. Working on email confirmation system. |
-| total | 42    | |
+| 19.6  | 5     | Learning Nodemailer and Redis. Working on email confirmation system. |
+| total | 43    | |

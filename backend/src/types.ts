@@ -1,8 +1,10 @@
-export interface LoginDetails {
+export interface RegisterDetails {
   username: string;
   password: string;
   email: string;
 }
+
+export type LoginDetails = Omit<RegisterDetails, "email">;
 
 export interface QuoteType {
   id?: number;

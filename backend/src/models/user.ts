@@ -8,6 +8,7 @@ class User extends Model {
 
   public username!: string;
   public passwordHash!: string;
+  public confirmed!: boolean;
 
   public static initialize(sequelize: Sequelize): void {
     this.init({
@@ -18,6 +19,9 @@ class User extends Model {
       },
       passwordHash: {
         type: DataTypes.STRING(64)
+      },
+      confirmed: {
+        type: DataTypes.BOOLEAN
       }
     }, {
       sequelize: sequelize,

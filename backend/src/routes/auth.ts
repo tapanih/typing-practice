@@ -1,7 +1,7 @@
 import express from 'express';
 import jsonwebtoken from 'jsonwebtoken';
 import controller from '../controllers/auth';
-import { toLoginDetails } from '../utils';
+import { toLoginDetails, toRegisterDetails } from '../utils';
 import { LoggedUser } from '../types';
 import { redis } from '../config/redis';
 
@@ -9,7 +9,7 @@ const router = express.Router();
 
 router.post('/register', (req, res) => {
   try {
-    const { username, password, email } = toLoginDetails(req.body);
+    const { username, password, email } = toRegisterDetails(req.body);
     controller.register(username, password, email)
       .then(_user => res.status(201).send())
       .catch(() => res.status(401).send("username taken"));
@@ -44,9 +44,9 @@ router.post('/login', (req, res) => {
 
 router.get("/confirm/:id", async (req, res) => {
   const { id } = req.params;
-  const userId = await redis.get(id);
+  const userId = Number(await redis.get(id));
   if (userId) {
-    //TODO: set user as confirmed
+    await controller.setConfirmed(userId);
     await redis.del(id);
     res.send("accepted");
   } else {

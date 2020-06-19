@@ -1,4 +1,4 @@
-import { QuoteType, LoginDetails, ResultType } from "../types";
+import { QuoteType, LoginDetails, ResultType, RegisterDetails } from "../types";
 
 const isObject = (x: unknown): x is Record<string, unknown> => {
   return typeof x === 'object' && x != null;
@@ -64,6 +64,16 @@ const parseId = (id: unknown): number => {
 export const toLoginDetails = (obj: unknown): LoginDetails => {
   if (!isObject(obj)) {
     throw new Error("LoginDetails is not an object");
+  }
+  return {
+    username: parseUsername(obj.username),
+    password: parsePassword(obj.password)
+  };
+};
+
+export const toRegisterDetails = (obj: unknown): RegisterDetails => {
+  if (!isObject(obj)) {
+    throw new Error("RegisterDetails is not an object");
   }
   return {
     username: parseUsername(obj.username),

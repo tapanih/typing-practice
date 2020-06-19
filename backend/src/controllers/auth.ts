@@ -15,7 +15,7 @@ const register = async (username: string, password: string, email: string): Prom
     throw new Error("username taken");
   } else {
     const passwordHash = await bcrypt.hash(password, BCRYPT_ROUNDS);
-    const newUser = await User.create({ username, passwordHash });
+    const newUser = await User.create({ username, passwordHash, confirmed: false });
     const confirmationLink = await createConfirmationLink(newUser.id);
     await sendEmail(email, confirmationLink);
     return newUser;
@@ -36,10 +36,21 @@ const login = async (username: string, password: string): Promise<User> => {
   if (!(user && isValid)) {
     throw new Error('Incorrect username or password');
   }
+
+  if (!user.confirmed) {
+    throw new Error("email not confirmed");
+  }
     
   return user;
 };
 
+const setConfirmed = async (userId: number): Promise<void> => {
+  await User.update({ confirmed: true },
+    { where: {
+      id: userId
+    }});
+};
+
 export default {
-  register, login
+  register, login, setConfirmed
 };

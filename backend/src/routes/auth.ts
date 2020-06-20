@@ -11,8 +11,13 @@ router.post('/register', (req, res) => {
   try {
     const { username, password, email } = toRegisterDetails(req.body);
     controller.register(username, password, email)
-      .then(_user => res.status(201).send())
-      .catch(() => res.status(401).send("username taken"));
+      .then(result => {
+        if (result.isSuccess) {
+          res.status(201).send();
+        } else {
+          res.status(401).send(result.getError());
+        }
+      }).catch(() => res.status(401).send("unexpected error"));
   } catch (error) {
     res.status(400).send();
   }
@@ -22,21 +27,25 @@ router.post('/login', (req, res) => {
   try {
     const { username, password } = toLoginDetails(req.body);
     controller.login(username, password)
-      .then(user => {
-        const payload = {
-          sub: user.id,
-          iat: Date.now()
-        };
-        const token = jsonwebtoken.sign(payload, "SECRET", { expiresIn: "1d" });
-        const userInfo: LoggedUser = {
-          id: user.id,
-          username: user.username,
-          token: token,
-          expiresIn: "1d"
-        };
-        res.status(200).send(userInfo);
-
-      }).catch(() => res.status(401).send("wrong username or password"));
+      .then(result => {
+        if (result.isSuccess) {
+          const user = result.getValue();
+          const payload = {
+            sub: user.id,
+            iat: Date.now()
+          };
+          const token = jsonwebtoken.sign(payload, "SECRET", { expiresIn: "1d" });
+          const userInfo: LoggedUser = {
+            id: user.id,
+            username: user.username,
+            token: token,
+            expiresIn: "1d"
+          };
+          res.status(200).send(userInfo);
+        } else {
+          res.status(401).send(result.getError());
+        }
+      }).catch(() => res.status(401).send("unexpected error"));
   } catch (error) {
     res.status(400).send();
   }

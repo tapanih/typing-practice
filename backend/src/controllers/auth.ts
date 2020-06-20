@@ -1,28 +1,29 @@
 import bcrypt from 'bcrypt';
+import { Result } from 'type-result';
 import { User } from "../models";
 import { sendEmail } from '../utils/sendEmail';
 import { createConfirmationLink } from '../utils/createConfirmationLink';
 
 const BCRYPT_ROUNDS = 12;
 
-const register = async (username: string, password: string, email: string): Promise<User> => {
+const register = async (username: string, password: string, email: string): Promise<Result<User, string>> => {
   const user = await User.findOne({
       where: {
         username: username
       }
     });
   if (user != null) {
-    throw new Error("username taken");
+    return Result.fail("username taken");
   } else {
     const passwordHash = await bcrypt.hash(password, BCRYPT_ROUNDS);
     const newUser = await User.create({ username, passwordHash, confirmed: false });
     const confirmationLink = await createConfirmationLink(newUser.id);
     await sendEmail(email, confirmationLink);
-    return newUser;
+    return Result.ok(newUser);
   }
 };
 
-const login = async (username: string, password: string): Promise<User> => {
+const login = async (username: string, password: string): Promise<Result<User, string>> => {
   const user = await User.findOne({
       where: {
         username: username
@@ -34,14 +35,14 @@ const login = async (username: string, password: string): Promise<User> => {
     : await bcrypt.compare(password, user.passwordHash);
 
   if (!(user && isValid)) {
-    throw new Error('Incorrect username or password');
+    return Result.fail('wrong username or password');
   }
 
   if (!user.confirmed) {
-    throw new Error("email not confirmed");
+    return Result.fail("email not confirmed");
   }
     
-  return user;
+  return Result.ok(user);
 };
 
 const setConfirmed = async (userId: number): Promise<void> => {

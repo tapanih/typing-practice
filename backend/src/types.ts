@@ -26,3 +26,8 @@ export interface LoggedUser {
   token: string;
   expiresIn: string;
 }
+
+export interface ServerError {
+  type: string;
+  message: string;
+}

@@ -6,12 +6,17 @@ class User extends Model {
   public createdAt!: Date;
   public updatedAt!: Date;
 
+  public email!: string;
   public username!: string;
   public passwordHash!: string;
   public confirmed!: boolean;
 
   public static initialize(sequelize: Sequelize): void {
     this.init({
+      email: {
+        type: DataTypes.STRING(254),
+        allowNull: false
+      },
       username: {
         type: DataTypes.TEXT,
         allowNull: false,

@@ -19,7 +19,7 @@ const RegisterForm: React.FC = () => {
       await userService.register(details);
       history.push("/login");
     } catch (error) {
-      setError("username", "serverError", error.response.data);
+      setError(error.response.data.type, "serverError", error.response.data.message);
     }
   };
 

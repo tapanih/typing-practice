@@ -17,7 +17,10 @@ router.post('/register', (req, res) => {
         } else {
           res.status(401).send(result.getError());
         }
-      }).catch(() => res.status(401).send("unexpected error"));
+      }).catch((error) => {
+        console.log(error);
+        res.status(401).send("unexpected error");
+      });
   } catch (error) {
     res.status(400).send();
   }

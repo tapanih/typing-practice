@@ -42,6 +42,11 @@ router.post('/login', (req, res) => {
   }
 });
 
+router.get("/logout", (req, res) => {
+  req.logout();
+  res.status(204).send();
+});
+
 router.get("/confirm/:id", async (req, res) => {
   const { id } = req.params;
   const userId = Number(await redis.get(id));

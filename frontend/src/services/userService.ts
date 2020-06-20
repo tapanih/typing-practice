@@ -2,6 +2,7 @@ import { RegisterFormFields } from "../components/RegisterForm";
 import { apiBaseUrl } from "../constants";
 import axios from "axios";
 import { LoginDetails, LoggedUser } from "../../../backend/src/types";
+import authHeader from "../helpers/authHeader";
 
 const register = async (details: RegisterFormFields) => {
   return await axios.post<RegisterFormFields>(
@@ -28,7 +29,11 @@ const login = async (details: LoginDetails) => {
   return user;
 }
 
-const logout = () => {
+const logout = async () => {
+  await axios.get<void>(
+    `${apiBaseUrl}/auth/logout`,
+    { headers: authHeader() }
+  );
   window.localStorage.removeItem("loggedUser");
 }
 

@@ -33,10 +33,19 @@ const parsePassword = (password: unknown): string => {
   return password;
 };
 
+// https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html#Email_Address_Validation
+const EMAIL_REGEX = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+/i;
+
 const parseEmail = (email: unknown): string => {
-  if (!email || !isString(email)) {
+  if (!email || !isString(email) || email.length > 254 || !EMAIL_REGEX.test(email)) {
     throw new Error("Incorrect or missing email");
   }
+
+  const [local, ] = email.split("@");
+  if (local.length > 63) {
+    throw new Error("Incorrect or missing email");
+  }
+
   return email;
 };
 

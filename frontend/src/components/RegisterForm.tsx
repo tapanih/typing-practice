@@ -36,7 +36,7 @@ const RegisterForm: React.FC = () => {
                 ref={register({
                   required: "This field is required",
                   pattern: {
-                    value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
+                    value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+/i,
                     message: "invalid email address"
                   }
                 })}

@@ -14,4 +14,5 @@
 | 15.6  | 4     | Researched React chart libraries. Created a profile page which shows previous results. |
 | 17.6  | 2     | Small improvements. |
 | 19.6  | 5     | Learning Nodemailer and Redis. Working on email confirmation system. |
-| total | 43    | |
+| 20.6  | 3     | Refactoring and small improvements. |
+| total | 46    | |

@@ -1,0 +1,44 @@
+version: '3.1'
+
+services:
+  db:
+    image: postgres
+    environment:       
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    expose:
+      - 5432
+
+  redis:
+    image: "redis:alpine"
+    expose:
+      - 6379
+  
+  backend:
+    build: './backend'
+    image: typing-backend
+    command: npm run dev
+    environment:
+      ETHEREAL_USER: ${ETHEREAL_USER}
+      ETHEREAL_PASS: ${ETHEREAL_PASS}
+      REDIS_URL: redis://redis:6379
+    expose:
+      - 3001
+    depends_on:
+      - db
+      - redis
+    
+  backend-tests:
+    image: typing-backend
+    command: dockerize
+      -wait tcp://db:5432 -wait tcp://redis:6379 -wait tcp://backend:3001 -timeout 10s
+      bash -c "npm test"
+    environment:
+      APP_URL: http://backend:3001
+      ETHEREAL_USER: ${ETHEREAL_USER}
+      ETHEREAL_PASS: ${ETHEREAL_PASS}
+      REDIS_URL: redis://redis:6379
+    depends_on: 
+      - db
+      - redis
+      - backend

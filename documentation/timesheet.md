@@ -15,4 +15,5 @@
 | 17.6  | 2     | Small improvements. |
 | 19.6  | 5     | Learning Nodemailer and Redis. Working on email confirmation system. |
 | 20.6  | 3     | Refactoring and small improvements. |
-| total | 46    | |
+| 21.6  | 3     | Setting up docker-compose.yml and Dockerfiles for testing backend. Learning Mocha and Chai. |
+| total | 49    | |

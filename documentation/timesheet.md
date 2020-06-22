@@ -16,4 +16,5 @@
 | 19.6  | 5     | Learning Nodemailer and Redis. Working on email confirmation system. |
 | 20.6  | 3     | Refactoring and small improvements. |
 | 21.6  | 3     | Setting up docker-compose.yml and Dockerfiles for testing backend. Learning Mocha and Chai. |
-| total | 49    | |
+| 22.6  | 5     | Fixed a lot of issues that prevented backend and databases from working together in tests. Added tests. |
+| total | 54    | |

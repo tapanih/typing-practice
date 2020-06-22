@@ -4,7 +4,9 @@ import User from './user';
 import config from '../config.json';
 import Result from './result';
 
-const sequelize = new Sequelize(
+const sequelize = process.env.POSTGRES_USER && process.env.POSTGRES_PASSWORD && process.env.POSTGRES_IP
+? new Sequelize(`postgres://${process.env.POSTGRES_USER}:${process.env.POSTGRES_PASSWORD}@${process.env.POSTGRES_IP}/${process.env.POSTGRES_USER}`)
+: new Sequelize(
     config.development.database,
     config.development.username,
     config.development.password,

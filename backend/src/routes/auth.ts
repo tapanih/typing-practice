@@ -13,7 +13,7 @@ router.post('/register', (req, res) => {
     controller.register(username, password, email)
       .then(result => {
         if (result.isSuccess) {
-          res.status(201).send();
+          res.status(201).send("OK");
         } else {
           res.status(401).send(result.getError());
         }

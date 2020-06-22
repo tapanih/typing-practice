@@ -8,7 +8,7 @@
     "dev": "ts-node-dev src/index.ts",
     "lint": "eslint --ext .ts .",
     "start": "node src/index.ts",
-    "test": "ts-mocha --timeout 10000 --bail 'test/**/*.ts'"
+    "test": "ts-mocha --exit --require test/hooks.ts --timeout 10000 --bail 'test/**/*.ts'"
   },
   "author": "Tapani Honkanen",
   "license": "ISC",

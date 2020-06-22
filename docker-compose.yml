@@ -22,6 +22,9 @@ services:
       ETHEREAL_USER: ${ETHEREAL_USER}
       ETHEREAL_PASS: ${ETHEREAL_PASS}
       REDIS_URL: redis://redis:6379
+      POSTGRES_IP: db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
     expose:
       - 3001
     depends_on:
@@ -38,6 +41,9 @@ services:
       ETHEREAL_USER: ${ETHEREAL_USER}
       ETHEREAL_PASS: ${ETHEREAL_PASS}
       REDIS_URL: redis://redis:6379
+      POSTGRES_IP: db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
     depends_on: 
       - db
       - redis

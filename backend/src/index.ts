@@ -9,11 +9,11 @@ import configure from './config/passport';
 import passport from 'passport';
 import { redis } from './config/redis';
 
-const start = async () => {
+const app = express();
+
+(async () => {
   // TODO: development mode only
   await redis.flushall();
-
-  const app = express();
 
   configure(passport);
   app.use(passport.initialize());
@@ -28,7 +28,8 @@ const start = async () => {
 
   app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
+    app.emit("ready");
   });
-};
+})().catch(error => console.log(error));
 
-start().catch(error => console.log(error));
+export default app;

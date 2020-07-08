@@ -25,6 +25,7 @@ services:
       POSTGRES_IP: db
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
+      JWT_SECRET: secret
     expose:
       - 3001
     depends_on:
@@ -37,6 +38,7 @@ services:
       -wait tcp://db:5432 -wait tcp://redis:6379 -wait tcp://backend:3001 -timeout 10s
       bash -c "npm test"
     environment:
+      NODE_ENV: test
       APP_URL: http://backend:3001
       ETHEREAL_USER: ${ETHEREAL_USER}
       ETHEREAL_PASS: ${ETHEREAL_PASS}
@@ -44,6 +46,7 @@ services:
       POSTGRES_IP: db
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
+      JWT_SECRET: secret
     depends_on: 
       - db
       - redis

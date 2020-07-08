@@ -8,12 +8,18 @@ import resultRouter from './routes/results';
 import configure from './config/passport';
 import passport from 'passport';
 import { redis } from './config/redis';
+import { db } from './models';
 
 const app = express();
 
 (async () => {
   // TODO: development mode only
   await redis.flushall();
+
+  // letting tests handle database creation by themselves
+  if (process.env.NODE_ENV !== "test") {
+    await db.sync({ force: true });
+  }
 
   configure(passport);
   app.use(passport.initialize());

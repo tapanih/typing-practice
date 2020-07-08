@@ -20,8 +20,6 @@ Result.initialize(sequelize);
 User.hasMany(Result, { foreignKey: 'userId', onDelete: 'cascade'});
 Quote.hasMany(Result, { foreignKey: 'quoteId'});
 
-void sequelize.sync({ force: true });
-
 export {
     sequelize as db,
     Quote,

@@ -48,7 +48,7 @@ const login = async (username: string, password: string): Promise<Result<User, s
   }
 
   if (!user.confirmed) {
-    return Result.fail("email not confirmed");
+    return Result.fail("please confirm your email");
   }
     
   return Result.ok(user);

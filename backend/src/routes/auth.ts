@@ -37,14 +37,19 @@ router.post('/login', (req, res) => {
             sub: user.id,
             iat: Date.now()
           };
-          const token = jsonwebtoken.sign(payload, "SECRET", { expiresIn: "1d" });
-          const userInfo: LoggedUser = {
-            id: user.id,
-            username: user.username,
-            token: token,
-            expiresIn: "1d"
-          };
-          res.status(200).send(userInfo);
+          if (process.env.JWT_SECRET) {
+            const token = jsonwebtoken.sign(payload, process.env.JWT_SECRET, { expiresIn: "1d" });
+            const userInfo: LoggedUser = {
+              id: user.id,
+              username: user.username,
+              token: token,
+              expiresIn: "1d"
+            };
+            res.status(200).send(userInfo);
+          } else {
+            console.log("Error: environment variable JWT_SECRET does not exist.");
+            res.status(401).send("unexpected error");
+          }
         } else {
           res.status(401).send(result.getError());
         }

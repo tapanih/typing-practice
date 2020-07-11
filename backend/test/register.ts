@@ -6,8 +6,8 @@ import { User } from "../src/models";
 
 chai.use(chaiHttp);
 
-const username = "testuser";
-const password = "testpass";
+const username = "newuser";
+const password = "newpass";
 const email = "test@example.org";
 
 describe("register user", () => {
@@ -32,7 +32,7 @@ describe("register user", () => {
     const res = await chai
       .request(app)
       .post("/api/auth/register")
-      .send({ username: "user2", password, email });
+      .send({ username: "newuser2", password, email });
 
     expect(res.status).to.equal(401);
     expect(res.body).to.have.property("type");
@@ -52,7 +52,7 @@ describe("register user", () => {
     const res = await chai
       .request(app)
       .post("/api/auth/register")
-      .send({ username, password, email: "user2@example.org" });
+      .send({ username, password, email: "newuser2@example.org" });
 
     expect(res.status).to.equal(401);
     expect(res.body).to.have.property("type");

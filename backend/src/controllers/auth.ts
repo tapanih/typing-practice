@@ -32,28 +32,6 @@ const register = async (username: string, password: string, email: string): Prom
   }
 };
 
-const login = async (username: string, password: string): Promise<Result<User, string>> => {
-  const user = await User.findOne({
-      where: {
-        username: username
-      }
-    });
-
-  const isValid = user === null
-    ? false
-    : await bcrypt.compare(password, user.passwordHash);
-
-  if (!(user && isValid)) {
-    return Result.fail('wrong username or password');
-  }
-
-  if (!user.confirmed) {
-    return Result.fail("please confirm your email");
-  }
-    
-  return Result.ok(user);
-};
-
 const setConfirmed = async (userId: number): Promise<void> => {
   await User.update({ confirmed: true },
     { where: {
@@ -62,5 +40,5 @@ const setConfirmed = async (userId: number): Promise<void> => {
 };
 
 export default {
-  register, login, setConfirmed
+  register, setConfirmed
 };

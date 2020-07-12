@@ -1,11 +1,11 @@
 import express from 'express';
-import passport from 'passport';
 import { toResult, toUserId } from '../utils';
 import controller from '../controllers/results';
+import { ensureAuthenticated } from '../utils/ensureAuthenticated';
 
 const router = express.Router();
 
-router.post('/', passport.authenticate('jwt', { session: false }), (req, res) => {
+router.post('/', ensureAuthenticated, (req, res) => {
   try {
     const result = toResult(req.body, req.user);
     controller.addResult(result)
@@ -17,7 +17,7 @@ router.post('/', passport.authenticate('jwt', { session: false }), (req, res) =>
   }
 });
 
-router.get('/', passport.authenticate('jwt', { session: false }), (req, res) => {
+router.get('/', ensureAuthenticated, (req, res) => {
   try {
     const userId = toUserId(req.user);
     controller.getResultsByUserId(userId)

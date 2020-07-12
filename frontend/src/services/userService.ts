@@ -2,7 +2,6 @@ import { RegisterFormFields } from "../components/RegisterForm";
 import { apiBaseUrl } from "../constants";
 import axios from "axios";
 import { LoginDetails, LoggedUser } from "../../../backend/src/types";
-import authHeader from "../helpers/authHeader";
 
 const register = async (details: RegisterFormFields) => {
   return await axios.post<RegisterFormFields>(
@@ -21,7 +20,8 @@ const confirmEmail = async (id: string): Promise<string> => {
 const login = async (details: LoginDetails) => {
   const { data: user } = await axios.post<LoggedUser>(
     `${apiBaseUrl}/auth/login`,
-    details
+    details,
+    { withCredentials: true }
   );
   window.localStorage.setItem(
     'loggedUser', JSON.stringify(user)
@@ -32,7 +32,7 @@ const login = async (details: LoginDetails) => {
 const logout = async () => {
   await axios.get<void>(
     `${apiBaseUrl}/auth/logout`,
-    { headers: authHeader() }
+    { withCredentials: true }
   );
   window.localStorage.removeItem("loggedUser");
 }

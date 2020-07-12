@@ -63,7 +63,7 @@ const parseAccuracy = (accuracy: unknown): number => {
   return accuracy;
 };
 
-const parseId = (id: unknown): number => {
+export const parseId = (id: unknown): number => {
   if (!id || !isNumber(id)) {
     throw new Error("Incorrect or missing id");
   }

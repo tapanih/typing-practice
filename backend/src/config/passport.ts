@@ -1,33 +1,54 @@
-import * as passportJwt from 'passport-jwt';
+import bcrypt from 'bcrypt';
 import { User } from '../models/index';
 import { PassportStatic } from 'passport';
+import { parseId } from '../utils';
+import * as passportLocal from 'passport-local';
 
-const ExtractJwt = passportJwt.ExtractJwt;
-const JwtStrategy = passportJwt.Strategy;
-
-const options = {
-  jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-  secretOrKey: "SECRET"
-};
+const LocalStrategy = passportLocal.Strategy;
 
 const configure = (passport: PassportStatic): void => {
-  passport.use(new JwtStrategy(options, (jwt_payload, done) => {
+  // eslint-disable-next-line @typescript-eslint/no-misused-promises
+  passport.use(new LocalStrategy(async (username: string, password: string, done) => {
+    try {
+      const user = await User.findOne({
+          where: {
+            username: username
+          }
+        });
 
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-    const sub = jwt_payload.sub as number;
+      const isValid = user === null
+        ? false
+        : await bcrypt.compare(password, user.passwordHash);
 
+      if (!(user && isValid)) {
+        return done(null, false, { message: 'wrong username or password' });
+      }
+
+      if (!user.confirmed) {
+        return done(null, false, { message: 'please confirm your email' });
+      }
+    
+      return done(null, user);
+    } catch (err) {
+      done(err, false);
+    }
+  }));
+
+  passport.serializeUser((user: User, done) => {
+    done(null, user.id);
+  });
+
+  passport.deserializeUser((id, done) => {
     User.findOne({
       where: {
-        id: sub
+        id: parseId(id)
       }
     }).then(user => {
-      if (user === null) {
-        return done(null, false);
-      } else {
-        return done(null, user);
-      }
-    }).catch(err => done(err, false));
-  }));
+      done(null, user);
+    }).catch(err => {
+      done(err);
+    });
+  });
 };
 
 export default configure;

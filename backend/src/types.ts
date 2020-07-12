@@ -23,8 +23,6 @@ export interface ResultType {
 export interface LoggedUser {
   id: number;
   username: string;
-  token: string;
-  expiresIn: string;
 }
 
 export interface ServerError {

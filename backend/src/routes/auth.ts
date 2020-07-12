@@ -1,9 +1,11 @@
 import express from 'express';
-import jsonwebtoken from 'jsonwebtoken';
 import controller from '../controllers/auth';
-import { toLoginDetails, toRegisterDetails } from '../utils';
+import { toRegisterDetails } from '../utils';
 import { LoggedUser } from '../types';
 import { redis } from '../config/redis';
+import passport from 'passport';
+import { User } from '../models';
+import { IVerifyOptions } from 'passport-local';
 
 const router = express.Router();
 
@@ -26,37 +28,28 @@ router.post('/register', (req, res) => {
   }
 });
 
-router.post('/login', (req, res) => {
-  try {
-    const { username, password } = toLoginDetails(req.body);
-    controller.login(username, password)
-      .then(result => {
-        if (result.isSuccess) {
-          const user = result.getValue();
-          const payload = {
-            sub: user.id,
-            iat: Date.now()
-          };
-          if (process.env.JWT_SECRET) {
-            const token = jsonwebtoken.sign(payload, process.env.JWT_SECRET, { expiresIn: "1d" });
-            const userInfo: LoggedUser = {
-              id: user.id,
-              username: user.username,
-              token: token,
-              expiresIn: "1d"
-            };
-            res.status(200).send(userInfo);
-          } else {
-            console.log("Error: environment variable JWT_SECRET does not exist.");
-            res.status(401).send("unexpected error");
-          }
+router.post('/login', (req, res, next) => {
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+  passport.authenticate('local', (err, user: User, info: IVerifyOptions) => {
+    if (err) {
+      return next(err);
+    }
+    if (!user) {
+      res.status(401).send(info.message);
+    } else {
+      req.login(user, (err) => {
+        if (err) {
+          return next(err);
         } else {
-          res.status(401).send(result.getError());
+          const userInfo: LoggedUser = {
+            id: user.id,
+            username: user.username,
+          };
+          res.status(200).send(userInfo);
         }
-      }).catch(() => res.status(401).send("unexpected error"));
-  } catch (error) {
-    res.status(400).send();
-  }
+      });
+    }
+  })(req, res, next);
 });
 
 router.get("/logout", (req, res) => {

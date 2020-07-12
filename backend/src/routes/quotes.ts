@@ -1,7 +1,6 @@
 import express from 'express';
 import controller from '../controllers/quotes';
 import { toQuote } from '../utils';
-import passport from 'passport';
 
 const router = express.Router();
 
@@ -17,12 +16,16 @@ router.get('/random', (_req, res) => {
     .catch(() => res.status(404).send());
 });
 
-router.post('/', passport.authenticate('jwt', { session: false }), (req, res) => {
+router.post('/', (req, res) => {
   try {
-    const quote = toQuote(req.body);
-    controller.addQuote(quote)
-      .then(() => res.status(201).send())
-      .catch(() => res.status(404).send());
+    if (req.isAuthenticated()) {
+      const quote = toQuote(req.body);
+      controller.addQuote(quote)
+        .then(() => res.status(201).send())
+        .catch(() => res.status(404).send());
+    } else {
+      res.status(401).send();
+    }
   } catch (e) {
     res.status(400).send("Missing or invalid content.");
   }

@@ -19,4 +19,5 @@
 | 22.6  | 5     | Fixed a lot of issues that prevented backend and databases from working together in tests. Added tests. |
 | 8.7   | 1     | Added tests. |
 | 11.7  | 3     | Switched to using sessions for authentication. |
-| total | 58    | |
+| 13.7  | 1     | Added tests. |
+| total | 59    | |

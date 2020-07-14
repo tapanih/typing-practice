@@ -12,21 +12,21 @@ const isNumber = (value: unknown): value is number => {
   return typeof value === 'number' && isFinite(value);
 };
 
-const parseContent = (content: unknown): string => {
+export const parseContent = (content: unknown): string => {
   if (!content || !isString(content) || content.length > 512) {
     throw new Error("Incorrect or missing content");
   }
   return content;
 };
 
-const parseUsername = (username: unknown): string => {
+export const parseUsername = (username: unknown): string => {
   if (!username || !isString(username)) {
     throw new Error("Incorrect or missing username");
   }
   return username;
 };
 
-const parsePassword = (password: unknown): string => {
+export const parsePassword = (password: unknown): string => {
   if (!password || !isString(password) || password.length > 64) {
     throw new Error("Incorrect or missing password");
   }
@@ -34,30 +34,30 @@ const parsePassword = (password: unknown): string => {
 };
 
 // https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html#Email_Address_Validation
-const EMAIL_REGEX = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+/i;
+const EMAIL_REGEX = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+$/i;
 
-const parseEmail = (email: unknown): string => {
+export const parseEmail = (email: unknown): string => {
   if (!email || !isString(email) || email.length > 254 || !EMAIL_REGEX.test(email)) {
     throw new Error("Incorrect or missing email");
   }
 
-  const [local, ] = email.split("@");
-  if (local.length > 63) {
+  const [local, domain] = email.split("@");
+  if (domain.length == 0 || local.length == 0 || local.length > 63) {
     throw new Error("Incorrect or missing email");
   }
 
   return email;
 };
 
-const parseWPM = (wpm: unknown): number => {
-  if (!wpm || !isNumber(wpm) || wpm < 0 || wpm > 500 || wpm % 1 !== 0) {
+export const parseWPM = (wpm: unknown): number => {
+  if (!wpm || !isNumber(wpm) || wpm <= 0 || wpm > 400 || wpm % 1 !== 0) {
     throw new Error("Incorrect or missing WPM");
   }
   return wpm;
 };
 
-const parseAccuracy = (accuracy: unknown): number => {
-  if (!accuracy || !isNumber(accuracy) || accuracy < 0 || accuracy > 100 || accuracy % 1 !== 0) {
+export const parseAccuracy = (accuracy: unknown): number => {
+  if (!accuracy || !isNumber(accuracy) || accuracy <= 0 || accuracy > 100 || accuracy % 1 !== 0) {
     throw new Error("Incorrect or missing accuracy");
   }
   return accuracy;

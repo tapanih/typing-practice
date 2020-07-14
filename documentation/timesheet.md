@@ -20,4 +20,5 @@
 | 8.7   | 1     | Added tests. |
 | 11.7  | 3     | Switched to using sessions for authentication. |
 | 13.7  | 1     | Added tests. |
-| total | 59    | |
+| 14.7  | 2     | Added tests and fixed bugs. |
+| total | 61    | |

@@ -26,6 +26,14 @@ before(async () => {
 });
 
 describe("results", () => {
+  it("result is not added when user is not authenticated", async () => {
+    const res = await agent
+      .post("/api/results")
+      .send(result);
+    
+    expect(res.status).equal(401);
+  });
+
   it("result is added when user is authenticated", async () => {
     const loginRes = await agent
       .post("/api/auth/login")

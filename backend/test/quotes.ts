@@ -19,8 +19,8 @@ before(async () => {
   });
 });
 
-describe("when the database is empty", () => {
-  it("should return 404", async () => {
+describe("quotes", () => {
+  it("return 404 when no quotes added", async () => {
     const res = await agent
       .get("/api/quotes/random");
 

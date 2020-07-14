@@ -1,9 +1,9 @@
 import { apiBaseUrl } from "../constants";
 import axios from "axios";
-import { ResultType } from "../../../backend/src/types";
+import { ResultType, ResultDetails } from "../../../backend/src/types";
 
-const addResult = async (result: ResultType) => {
-  await axios.post<ResultType>(
+const addResult = async (result: ResultDetails) => {
+  await axios.post<ResultDetails>(
     `${apiBaseUrl}/results`,
     result,
     { withCredentials: true }

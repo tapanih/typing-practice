@@ -20,6 +20,8 @@ export interface ResultType {
   quoteId: number;
 }
 
+export type ResultDetails = Omit<ResultType, "userId">;
+
 export interface LoggedUser {
   id: number;
   username: string;

@@ -44,8 +44,7 @@ const TypingPage: React.FC = () => {
       await resultService.addResult({
         wpm,
         accuracy,
-        quoteId: quote.id,
-        userId: state.user.id
+        quoteId: quote.id
       });
     } catch (error) {
       handleErrors(error, dispatch);

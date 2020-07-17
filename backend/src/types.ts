@@ -31,3 +31,17 @@ export interface ServerError {
   type: string;
   message: string;
 }
+
+export interface ForgotPasswordFormFields {
+  email: string;
+}
+
+export interface ResetPasswordDetails {
+  key: string;
+  newPassword: string;
+}
+
+export interface ResetPasswordFormFields {
+  newPassword: string;
+  confirmNewPassword: string;
+}

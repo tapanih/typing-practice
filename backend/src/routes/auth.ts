@@ -1,6 +1,6 @@
 import express from 'express';
 import controller from '../controllers/auth';
-import { toRegisterDetails } from '../utils';
+import { toRegisterDetails, toEmail, toResetPasswordDetails } from '../utils';
 import { LoggedUser } from '../types';
 import { redis } from '../config/redis';
 import passport from 'passport';
@@ -57,15 +57,41 @@ router.get("/logout", (req, res) => {
   res.status(204).send();
 });
 
-router.get("/confirm/:id", async (req, res) => {
-  const { id } = req.params;
-  const userId = Number(await redis.get(id));
+router.get("/confirm/:key", async (req, res) => {
+  const { key } = req.params;
+  const userId = Number(await redis.get(key));
   if (userId) {
-    await controller.setConfirmed(userId);
-    await redis.del(id);
+    const setConfirmedPromise = controller.setConfirmed(userId);
+    const deleteKeyPromise = redis.del(key);
+    await Promise.all([setConfirmedPromise, deleteKeyPromise]);
     res.send("accepted");
   } else {
     res.send("rejected");
+  }
+});
+
+router.post("/forgotPassword", (req, res) => {
+  try {
+    res.status(200).send();
+    const email = toEmail(req.body);
+    void controller.forgotPassword(email);
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+router.post("/resetPassword", async (req, res) => {
+  try {
+    const { key, newPassword } = toResetPasswordDetails(req.body);
+    const userId = Number(await redis.get(`forgot:${key}`));
+    if (userId && await controller.resetPassword(userId, newPassword)) {
+      await redis.del(`forgot:${key}`);
+      res.status(200).send("accepted");
+    } else {
+      res.status(401).send("rejected by server");
+    }
+  } catch (error) {
+    res.status(400).send();
   }
 });
 

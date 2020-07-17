@@ -70,6 +70,13 @@ export const parseId = (id: unknown): number => {
   return id;
 };
 
+export const parseKey = (key: unknown): string => {
+  if (!key || !isString(key)) {
+    throw new Error("Incorrect or missing key");
+  }
+  return key;
+};
+
 export const toLoginDetails = (obj: unknown): LoginDetails => {
   if (!isObject(obj)) {
     throw new Error("LoginDetails is not an object");
@@ -125,4 +132,21 @@ export const toUserId = (user: unknown): number => {
     throw new Error("User is not an object");
   }
   return parseId(user.id);
+};
+
+export const toEmail = (body: unknown): string => {
+  if (!isObject(body)) {
+    throw new Error("Incorrect or missing email");
+  }
+  return parseEmail(body.email);
+};
+
+export const toResetPasswordDetails = (body: unknown): ResetPasswordDetails => {
+  if (!isObject(body)) {
+    throw new Error("Request body is not an object");
+  }
+  return {
+    key: parseKey(body.key),
+    newPassword: parsePassword(body.newPassword)
+  };
 };

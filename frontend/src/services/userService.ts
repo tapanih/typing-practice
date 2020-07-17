@@ -1,7 +1,7 @@
 import { RegisterFormFields } from "../components/RegisterForm";
 import { apiBaseUrl } from "../constants";
 import axios from "axios";
-import { LoginDetails, LoggedUser } from "../../../backend/src/types";
+import { LoginDetails, LoggedUser, ForgotPasswordFormFields, ResetPasswordDetails } from "../../../backend/src/types";
 
 const register = async (details: RegisterFormFields) => {
   return await axios.post<RegisterFormFields>(
@@ -37,6 +37,20 @@ const logout = async () => {
   window.localStorage.removeItem("loggedUser");
 }
 
+const forgotPassword = async (details: ForgotPasswordFormFields) => {
+  await axios.post(
+    `${apiBaseUrl}/auth/forgotPassword`,
+    details
+  );
+}
+
+const resetPassword = async (details: ResetPasswordDetails) => {
+  await axios.post(
+    `${apiBaseUrl}/auth/resetPassword`,
+    details
+  );
+}
+
 export default {
-  register, confirmEmail, login, logout
+  register, confirmEmail, login, logout, forgotPassword, resetPassword
 }

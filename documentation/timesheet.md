@@ -20,5 +20,6 @@
 | 8.7   | 1     | Added tests. |
 | 11.7  | 3     | Switched to using sessions for authentication. |
 | 13.7  | 1     | Added tests. |
-| 14.7  | 2     | Added tests and fixed bugs. |
-| total | 61    | |
+| 14.7  | 3     | Added tests and fixed bugs. |
+| 16.7  | 5     | Added a password reset flow. |
+| total | 67    | |

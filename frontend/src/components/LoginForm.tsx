@@ -3,6 +3,7 @@ import { LoginDetails } from '../../../backend/src/types';
 import { useForm } from 'react-hook-form';
 import { useStateValue, login } from '../state';
 import userService from '../services/userService';
+import { Link } from 'react-router-dom';
 
 const LoginForm: React.FC = () => {
   const [, dispatch] = useStateValue();
@@ -52,6 +53,9 @@ const LoginForm: React.FC = () => {
               >
                 Sign in
               </button>
+            </div>
+            <div className="text-center mt-4">
+              <Link to="/forgotPassword">Forgot password?</Link>
             </div>
           </form>
         </div>

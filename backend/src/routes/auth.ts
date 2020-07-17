@@ -1,11 +1,12 @@
 import express from 'express';
 import controller from '../controllers/auth';
-import { toRegisterDetails, toEmail, toResetPasswordDetails } from '../utils';
+import { toRegisterDetails, toEmail, toResetPasswordDetails, toChangePasswordDetails } from '../utils';
 import { LoggedUser } from '../types';
 import { redis } from '../config/redis';
 import passport from 'passport';
 import { User } from '../models';
 import { IVerifyOptions } from 'passport-local';
+import { ensureAuthenticated } from '../utils/ensureAuthenticated';
 
 const router = express.Router();
 
@@ -88,9 +89,26 @@ router.post("/resetPassword", async (req, res) => {
       await redis.del(`forgot:${key}`);
       res.status(200).send("accepted");
     } else {
-      res.status(401).send("rejected by server");
+      res.status(401).send({ type: "password", message: "rejected by server" });
     }
   } catch (error) {
+    console.log(error);
+    res.status(400).send();
+  }
+});
+
+router.post("/changePassword", ensureAuthenticated, async (req, res) => {
+  try {
+    const user = req.user as User;
+    const { oldPassword, newPassword } = toChangePasswordDetails(req.body);
+    const result = await controller.changePassword(user, oldPassword, newPassword);
+    if (result.isSuccess) {
+      res.status(200).send("OK");
+    } else {
+      res.status(400).send(result.getError());
+    }
+  } catch (error) {
+    console.log(error);
     res.status(400).send();
   }
 });

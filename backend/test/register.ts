@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import chai, { expect } from "chai";
 import chaiHttp from "chai-http";
 import app from "../src/index";
@@ -35,10 +34,7 @@ describe("register user", () => {
       .send({ username: "newuser2", password, email });
 
     expect(res.status).to.equal(401);
-    expect(res.body).to.have.property("type");
-    expect(res.body).to.have.property("message");
-    expect(res.body.type).to.equal("email");
-    expect(res.body.message).to.equal("email taken");
+    expect(res.body).to.eql({ type: "email", message: "email taken"});
 
     const users = await User.findAll({
       where: {
@@ -55,10 +51,7 @@ describe("register user", () => {
       .send({ username, password, email: "newuser2@example.org" });
 
     expect(res.status).to.equal(401);
-    expect(res.body).to.have.property("type");
-    expect(res.body).to.have.property("message");
-    expect(res.body.type).to.equal("username");
-    expect(res.body.message).to.equal("username taken");
+    expect(res.body).to.eql({ type: "username", message: "username taken" });
 
     const users = await User.findAll({
       where: {

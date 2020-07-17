@@ -45,3 +45,8 @@ export interface ResetPasswordFormFields {
   newPassword: string;
   confirmNewPassword: string;
 }
+
+export interface ChangePasswordDetails {
+  oldPassword: string;
+  newPassword: string;
+}

@@ -1,4 +1,4 @@
-import { QuoteType, LoginDetails, ResultType, RegisterDetails } from "../types";
+import { QuoteType, LoginDetails, ResultType, RegisterDetails, ResetPasswordDetails, ChangePasswordDetails } from "../types";
 
 const isObject = (x: unknown): x is Record<string, unknown> => {
   return typeof x === 'object' && x != null;
@@ -147,6 +147,16 @@ export const toResetPasswordDetails = (body: unknown): ResetPasswordDetails => {
   }
   return {
     key: parseKey(body.key),
+    newPassword: parsePassword(body.newPassword)
+  };
+};
+
+export const toChangePasswordDetails = (body: unknown): ChangePasswordDetails => {
+  if (!isObject(body)) {
+    throw new Error("Request body is not an object");
+  }
+  return {
+    oldPassword: parsePassword(body.oldPassword),
     newPassword: parsePassword(body.newPassword)
   };
 };

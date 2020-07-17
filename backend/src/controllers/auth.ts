@@ -64,6 +64,18 @@ const resetPassword = async (userId: number, newPassword: string): Promise<boole
   }
 };
 
+const changePassword = async (user: User, oldPassword: string, newPassword: string): Promise<Result<null, ServerError>> => {
+  if (!(await bcrypt.compare(oldPassword, user.passwordHash))) {
+    return Result.fail({ type: "oldPassword", message: "wrong password" });
+  } 
+  const newPasswordHash = await bcrypt.hash(newPassword, BCRYPT_ROUNDS);
+  await User.update(
+    { passwordHash: newPasswordHash },
+    { where: { id: user.id }}
+  );
+  return Result.ok(null);
+};
+
 export default {
-  register, setConfirmed, forgotPassword, resetPassword
+  register, setConfirmed, forgotPassword, resetPassword, changePassword
 };

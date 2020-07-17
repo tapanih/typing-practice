@@ -22,4 +22,5 @@
 | 13.7  | 1     | Added tests. |
 | 14.7  | 3     | Added tests and fixed bugs. |
 | 16.7  | 5     | Added a password reset flow. |
-| total | 67    | |
+| 17.7  | 2     | Implemented a password change feature. |
+| total | 69    | |

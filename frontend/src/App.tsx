@@ -10,6 +10,7 @@ import ProfilePage from './components/ProfilePage';
 import ConfirmEmail from './components/ConfirmEmail';
 import ForgotPasswordForm from './components/ForgotPasswordForm';
 import ResetPasswordForm from './components/ResetPasswordForm';
+import ChangePasswordForm from './components/ChangePasswordForm';
 
 const App: React.FC = () => {
   const [state, dispatch] = useStateValue();
@@ -33,6 +34,7 @@ const App: React.FC = () => {
           <Route path="/submit"         render={() => <AddQuoteForm />} />
           <Route path="/profile"        render={() => <ProfilePage />} />
           <Route path="/forgotPassword" render={() => <ForgotPasswordForm />} />
+          <Route path="/changePassword" render={() => <ChangePasswordForm />} />
           <Route path="/confirm/:id"    component={ConfirmEmail} />
           <Route path="/resetPassword/:key" component={ResetPasswordForm} />
         </Switch>

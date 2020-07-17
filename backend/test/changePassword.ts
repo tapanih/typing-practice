@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import chai, { expect } from "chai";
 import chaiHttp from "chai-http";
 import app from "../src/index";
@@ -38,10 +37,7 @@ describe("change password", () => {
       .send({ oldPassword: "wrongPassword", newPassword: "newPassword2" });  
     
     expect(res.status).to.equal(400);
-    expect(res.body).to.have.property("type");
-    expect(res.body).to.have.property("message");
-    expect(res.body.type).to.equal("oldPassword");
-    expect(res.body.message).to.equal("wrong password");
+    expect(res.body).to.eql({ type: "oldPassword", message: "wrong password" });
   });
 
   it("works if current password is correct", async () => {

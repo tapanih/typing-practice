@@ -50,3 +50,9 @@ export interface ChangePasswordDetails {
   oldPassword: string;
   newPassword: string;
 }
+
+export interface ChangePasswordFormFields {
+  oldPassword: string;
+  newPassword: string;
+  confirmNewPassword: string;
+}
